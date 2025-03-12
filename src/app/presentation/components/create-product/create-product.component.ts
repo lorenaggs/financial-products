@@ -29,12 +29,19 @@ export class CreateProductComponent implements OnInit {
   isEditMode = signal(false);
   productId = signal<string | null>(null);
   idParam: string | null = null;
+  minDate = '';
 
   constructor(
     private route: ActivatedRoute = inject(ActivatedRoute),
     private fb: FormBuilder,
     private productService: FinancialProductApiService
   ) {
+    const today = new Date();
+    const dd = String(today.getDate()).padStart(2, '0');
+    const mm = String(today.getMonth() + 1).padStart(2, '0'); // Los meses comienzan en 0
+    const yyyy = today.getFullYear();
+    this.minDate = `${yyyy}-${mm}-${dd}`;
+
 
     this.idParam = this.route.snapshot.paramMap.get('id');
     if (this.idParam) {
@@ -55,7 +62,7 @@ export class CreateProductComponent implements OnInit {
       description: ['', [Validators.required, Validators.minLength(10), Validators.maxLength(200)]],
       logo: ['', Validators.required],
       date_release: ['', Validators.required],
-      date_revision: ['', Validators.required]
+      date_revision: [{ value: '', disabled: true }, Validators.required],
     }, {
       validators: [this.validateDates.bind(this)]
     });
@@ -65,29 +72,49 @@ export class CreateProductComponent implements OnInit {
       this.productForm.patchValue({id});
     }
 
+    this.productForm.get('date_release')?.valueChanges.subscribe((value: string) => {
+      if (value) {
+        const releaseDate = new Date(value);
+        const today = new Date();
+        if (releaseDate < new Date(today.getFullYear(), today.getMonth(), today.getDate())) {
+          this.productForm.get('date_release')?.setErrors({ invalidRelease: true });
+          this.productForm.get('date_revision')?.setValue('');
+        } else {
+          const revisionDate = new Date(releaseDate);
+          revisionDate.setFullYear(revisionDate.getFullYear() + 1);
+          const revisionDateStr = revisionDate.toISOString().split('T')[0];
+          this.productForm.get('date_revision')?.setValue(revisionDateStr);
+          this.productForm.get('date_release')?.setErrors(null);
+        }
+      } else {
+        this.productForm.get('date_revision')?.setValue('');
+      }
+    });
+
   }
+
 
   getFieldError(fieldName: string): string {
     const control = this.productForm.get(fieldName);
 
     if (control && control.invalid && (control.touched || control.dirty)) {
       if (control.errors?.['required']) {
-        return 'Este campo es obligatorio';
+        return 'Este campo es requerido!';
       }
       if (control.errors?.['minlength']) {
-        return `Mínimo ${control.errors['minlength'].requiredLength} caracteres`;
+        return `Mínimo ${control.errors['minlength'].requiredLength} caracteres!`;
       }
       if (control.errors?.['maxlength']) {
         return `Máximo ${control.errors['maxlength'].requiredLength} caracteres`;
       }
       if (control.errors?.['idExists']) {
-        return 'El ID ya existe';
+        return 'ID no válido!';
       }
       if (control.errors?.['invalidRelease']) {
-        return 'La fecha de liberación debe ser hoy o posterior';
+        return 'La fecha de liberación debe ser hoy o posterior!';
       }
       if (control.errors?.['invalidRevision']) {
-        return 'La fecha de revisión debe ser exactamente 1 año posterior a la liberación';
+        return 'La fecha de revisión debe ser exactamente 1 año posterior a la liberación!';
       }
     }
     return '';
@@ -158,7 +185,6 @@ export class CreateProductComponent implements OnInit {
     }
   }
 
-
   onReset(): void {
     if (this.isEditMode()) {
       this.productForm.reset({
@@ -169,7 +195,6 @@ export class CreateProductComponent implements OnInit {
       this.productForm.reset();
     }
   }
-
 
   loadProduct(): void {
     if (!this.productId()) return;

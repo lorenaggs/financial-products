@@ -1,0 +1,103 @@
+<app-header></app-header>
+<div class="page-container">
+  <div class="actions ">
+    <div class="search-box">
+      <input
+
+        type="text"
+        placeholder="Search..."
+        [(ngModel)]="searchTerm"
+        (input)="searchProducts()"
+      />
+    </div>
+    <button class="btn-add" [routerLink]="['/new-product']">Agregar</button>
+  </div>
+  <div class="card-container">
+    <div class="table-responsive">
+      <table>
+        <thead>
+        <tr>
+          <th>Logo</th>
+          <th>Nombre del producto</th>
+          <th>
+            <div class="table-header">
+              Descripción
+              <div class="info-icon" title="La descripción debe tener entre 10 y 100 caracteres.">
+                <span>i</span>
+              </div>
+            </div>
+          </th>
+          <th>
+            <div class="table-header">
+              Fecha de liberación
+              <div class="info-icon" title="La fecha debe ser igual o mayor a la fecha actual.">
+                <span>i</span>
+              </div>
+            </div>
+          </th>
+          <th>
+            <div class="table-header">
+              Fecha de revisión
+              <div class="info-icon" title="La fecha debe ser exactamente un año posterior a la fecha de
+liberación.">
+                <span>i</span>
+              </div>
+            </div>
+          </th>
+          <th class="text-right"></th>
+        </tr>
+        </thead>
+        <tbody>
+          @for (product of listProducts; track $index) {
+            <tr>
+              <td>
+                @if (product.logo.includes('http')) {
+                  <img class="profile-icon" ngSrc="{{product.logo}}" alt="logo" fill/>
+                } @else {
+                  <div class="profile-icon">
+                    <span>
+                      {{ product.name.slice(0, 2) | uppercase }}
+                    </span>
+                  </div>
+                }
+              </td>
+
+              <td>{{ product.name }}</td>
+              <td>{{ product.description }}</td>
+              <td>{{ product.date_release | date:'dd/MM/yyyy' }}</td>
+              <td>{{ product.date_revision | date:'dd/MM/yyyy' }}</td>
+              <td class="text-right">
+                <div class="menu-container">
+                  <button class="menu-button" (click)="toggleDropdown(product.id)">...</button>
+                  <div class="menu-dropdown" *ngIf="openDropdownId === product.id">
+                    <button class="dropdown-item" [routerLink]="['/edit-product', product.id]">Editar</button>
+                    <button class="dropdown-item" (click)="openModal(product.id, product.name)">Eliminar</button>
+                  </div>
+                </div>
+              </td>
+
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+    <div class="footer">
+      <span>{{ listProducts.length }} Resultados</span>
+      <select id="quantity" (change)="onQuantityChange($event)">
+        <option value="5">5</option>
+        <option value="10">10</option>
+        <option value="20">20</option>
+      </select>
+    </div>
+  </div>
+</div>
+
+@if (showDeleteModal) {
+  <app-modal
+    [title]="'Eliminar producto'"
+    [message]=" message "
+    (onClose)="closeModal()"
+    (onConfirm)="confirmDelete()"
+  ></app-modal>
+}
+

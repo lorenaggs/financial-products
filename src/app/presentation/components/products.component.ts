@@ -1,27 +1,32 @@
 import {Component, OnInit} from '@angular/core';
 import {FinancialProductApiService} from '../../infrastructure/adapters/financialProductApiService';
-import {CommonModule} from '@angular/common';
+import {CommonModule, NgOptimizedImage} from '@angular/common';
 import {Router, RouterLink, RouterOutlet} from '@angular/router';
 import {CreateProductComponent} from './create-product/create-product.component';
 import {HeaderComponent} from './header/header.component';
 import {FormsModule} from '@angular/forms';
 import {FinancialProduct} from '../../domain/models/financial-product.model';
+import {ModalComponent} from './modal/modal.component';
 
 @Component({
-  selector: 'app-products',
+  selector: 'app-components',
   standalone: true,
-  imports: [CommonModule, RouterLink, RouterOutlet, CreateProductComponent, HeaderComponent, FormsModule],
+  imports: [CommonModule, RouterLink, RouterOutlet, CreateProductComponent, HeaderComponent, FormsModule, NgOptimizedImage, ModalComponent],
   templateUrl: './products.component.html',
   styleUrl: './products.component.scss'
 })
 export class ProductsComponent implements OnInit {
 
   listProducts: FinancialProduct[] = [];
-  showListProducts = true;
   searchTerm: string = '';
   allProducts: FinancialProduct[] = [];
   selectedQuantity: number = 5;
   showForm = false;
+  openDropdownId: string | null = null;
+  selectedProductId: string | null = null;
+  selectedProductName: string = '';
+  showDeleteModal = false;
+  message: string = '';
 
   constructor(
     public financialProductService: FinancialProductApiService,
@@ -41,10 +46,6 @@ export class ProductsComponent implements OnInit {
         this.updateDisplayedProducts();
       }
     );
-  }
-
-  addProduct(): void {
-    this.showListProducts = false;
   }
 
   searchProducts(): void {
@@ -70,11 +71,50 @@ export class ProductsComponent implements OnInit {
     this.updateDisplayedProducts();
   }
 
-  deleteProduct(productId: string): void {
-    this.financialProductService.deleteFinancialProduct(productId).subscribe(() => {
+  toggleDropdown(productId: string): void {
+    this.openDropdownId = this.openDropdownId === productId ? null : productId;
+  }
+
+  deleteProduct(): void {
+    if (!this.selectedProductId) return;
+    this.financialProductService.deleteFinancialProduct(this.selectedProductId).subscribe(() => {
+      this.listProducts = this.listProducts.filter((product) => product.id !== this.selectedProductId);
+      this.allProducts = this.allProducts.filter((product) => product.id !== this.selectedProductId);
+      this.updateDisplayedProducts();
+    });
+
+   /* this.financialProductService.deleteFinancialProduct(this.selectedProductId).subscribe(() => {
       this.listProducts = this.listProducts.filter((product) => product.id !== productId);
       this.allProducts = this.allProducts.filter((product) => product.id !== productId);
       this.updateDisplayedProducts();
+    });*/
+  }
+
+  openModal(productId: string, productName: string): void {
+    this.selectedProductId = productId;
+    this.selectedProductName = productName;
+    this.message = productName;
+    this.showDeleteModal = true;
+  }
+
+  closeModal(): void {
+    this.showDeleteModal = false;
+    this.selectedProductId = null;
+    this.selectedProductName = '';
+  }
+
+  confirmDelete(): void {
+    if (!this.selectedProductId) return;
+
+    this.financialProductService.deleteFinancialProduct(this.selectedProductId).subscribe(() => {
+      /*this.listProducts = this.listProducts.filter(p => p.id !== this.selectedProductId);
+      this.updateDisplayedProducts();*/
+      this.listProducts = this.listProducts.filter((product) => product.id !== this.selectedProductId);
+      this.allProducts = this.allProducts.filter((product) => product.id !== this.selectedProductId);
+      this.updateDisplayedProducts();
+      this.showDeleteModal = false;
+      alert('Producto eliminado correctamente.');
     });
   }
+
 }

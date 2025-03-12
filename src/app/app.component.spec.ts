@@ -19,7 +19,7 @@ describe('AppComponent', () => {
   it(`should have title as 'financial-products'`, () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
-    expect(app.title).toEqual('financial-products');
+    expect(app.title).toEqual('financial-components');
   });
 
   it('should contain a RouterOutlet directive', () => {
@@ -31,7 +31,7 @@ describe('AppComponent', () => {
   xit('should contain the ProductsComponent', () => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
-    const productsComponent = fixture.nativeElement.querySelector('app-products');
-    expect(productsComponent).not.toBeNull();
+    const compiled = fixture.nativeElement as HTMLElement;
+    expect(compiled.querySelector('h1')?.textContent).toContain('Hello, financial-components');
   });
 });

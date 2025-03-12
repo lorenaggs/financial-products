@@ -1,0 +1,14 @@
+<div class="modal-overlay">
+  <div class="modal">
+    <p> Estás seguro de eliminar el producto
+      <span class="name-message">{{ message() }}</span>?
+    </p>
+    <div class="buttons">
+      <div class="line-divider"></div>
+      <div class="container-buttons">
+        <button class="cancel" (click)="cancel()">Cancelar</button>
+        <button class="confirm" (click)="confirm()">Confirmar</button>
+      </div>
+    </div>
+  </div>
+</div>
