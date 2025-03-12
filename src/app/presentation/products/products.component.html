@@ -5,7 +5,12 @@
     <div class="page-container">
       <div class="actions">
         <div class="search-box">
-          <input type="text" placeholder="Search..."/>
+          <input
+            type="text"
+            placeholder="Search..."
+            [(ngModel)]="searchTerm"
+            (input)="searchProducts()"
+          />
         </div>
         <button class="btn-add" [routerLink]="['/new-product']" (click)="addProduct()">Agregar</button>
       </div>
@@ -23,7 +28,6 @@
             </tr>
             </thead>
             <tbody>
-            <!-- Iteración sobre la lista de productos -->
               @for (product of listProducts; track $index) {
                 <tr>
                   <td>
