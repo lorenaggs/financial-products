@@ -32,6 +32,7 @@ export class ProductsComponent implements OnInit {
     public financialProductService: FinancialProductApiService,
     private router: Router,
   ) {
+    console.log('ProductsComponent constructor');
     this.router.events.subscribe(() => {
       const currentRoute = this.router.url;
       this.showForm = currentRoute.includes('new-product') || currentRoute.includes('edit-product');
@@ -75,21 +76,6 @@ export class ProductsComponent implements OnInit {
     this.openDropdownId = this.openDropdownId === productId ? null : productId;
   }
 
-  deleteProduct(): void {
-    if (!this.selectedProductId) return;
-    this.financialProductService.deleteFinancialProduct(this.selectedProductId).subscribe(() => {
-      this.listProducts = this.listProducts.filter((product) => product.id !== this.selectedProductId);
-      this.allProducts = this.allProducts.filter((product) => product.id !== this.selectedProductId);
-      this.updateDisplayedProducts();
-    });
-
-   /* this.financialProductService.deleteFinancialProduct(this.selectedProductId).subscribe(() => {
-      this.listProducts = this.listProducts.filter((product) => product.id !== productId);
-      this.allProducts = this.allProducts.filter((product) => product.id !== productId);
-      this.updateDisplayedProducts();
-    });*/
-  }
-
   openModal(productId: string, productName: string): void {
     this.selectedProductId = productId;
     this.selectedProductName = productName;
@@ -107,8 +93,6 @@ export class ProductsComponent implements OnInit {
     if (!this.selectedProductId) return;
 
     this.financialProductService.deleteFinancialProduct(this.selectedProductId).subscribe(() => {
-      /*this.listProducts = this.listProducts.filter(p => p.id !== this.selectedProductId);
-      this.updateDisplayedProducts();*/
       this.listProducts = this.listProducts.filter((product) => product.id !== this.selectedProductId);
       this.allProducts = this.allProducts.filter((product) => product.id !== this.selectedProductId);
       this.updateDisplayedProducts();
