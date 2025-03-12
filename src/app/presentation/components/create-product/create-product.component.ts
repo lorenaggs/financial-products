@@ -3,7 +3,6 @@ import {
   FormBuilder,
   FormGroup,
   Validators,
-  AbstractControl,
   ReactiveFormsModule
 } from '@angular/forms';
 import {FinancialProductApiService} from '../../../infrastructure/adapters/financialProductApiService';
@@ -64,7 +63,6 @@ export class CreateProductComponent implements OnInit {
       date_release: ['', Validators.required],
       date_revision: [{ value: '', disabled: true }, Validators.required],
     }, {
-      validators: [this.validateDates.bind(this)]
     });
 
     if (this.isEditMode()) {
@@ -118,38 +116,6 @@ export class CreateProductComponent implements OnInit {
       }
     }
     return '';
-  }
-
-  validateDates(control: AbstractControl): null {
-    const releaseDateControl = control.get('date_release');
-    const revisionDateControl = control.get('date_revision');
-
-    if (!releaseDateControl || !revisionDateControl) {
-      return null;
-    }
-
-    const releaseDate = new Date(releaseDateControl.value);
-    const revisionDate = new Date(revisionDateControl.value);
-
-    const today = new Date();
-    const todayLocal = new Date(today.getFullYear(), today.getMonth(), today.getDate() - 1);
-
-    if (releaseDate < todayLocal) {
-      releaseDateControl.setErrors({invalidRelease: true});
-    } else if (releaseDateControl.hasError('invalidRelease')) {
-      releaseDateControl.setErrors(null);
-    }
-
-    const oneYearAfter = new Date(releaseDate);
-    oneYearAfter.setFullYear(oneYearAfter.getFullYear() + 1);
-
-    if (revisionDate.getTime() !== oneYearAfter.getTime()) {
-      revisionDateControl.setErrors({invalidRevision: true});
-    } else if (revisionDateControl.hasError('invalidRevision')) {
-      revisionDateControl.setErrors(null);
-    }
-
-    return null;
   }
 
   onSubmit(): void {
