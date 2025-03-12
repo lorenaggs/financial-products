@@ -205,3 +205,25 @@ $disabled-bg: #e5e7eb;
     display: block;
   }
 }
+
+.info-icon {
+  width: 1.5rem;
+  height: 1.5rem;
+  border-radius: 50%;
+  background-color: #999999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: 1rem;
+  cursor: pointer;
+  span {
+    color: #ffffff;
+    font-size: 1rem;
+    font-weight: 500;
+  }
+}
+
+.table-header{
+  display: flex;
+  align-items: center;
+}
