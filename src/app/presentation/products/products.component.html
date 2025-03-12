@@ -1,4 +1,4 @@
-@if (showListProducts && !showForm) {
+<!--@if (showListProducts && !showForm) {-->
   <app-header></app-header>
   <div class="page-container">
     <div class="actions">
@@ -30,7 +30,7 @@
               <tr>
                 <td>
                   <div class="profile-icon">
-                    <span>JG</span>
+                    <span>{{ 'JG' }}</span>
                   </div>
                 </td>
                 <td>{{ product.name }}</td>
@@ -39,19 +39,19 @@
                 <td>{{ product.date_revision | date:'dd/MM/yyyy' }}</td>
                 <td class="text-right">
                   <div class="menu-container">
-                    <button class="menu-button">⋮</button>
-                    <div class="menu-dropdown">
+                    <button class="menu-button" (click)="toggleDropdown(product.id)">⋮</button>
+                    <div class="menu-dropdown" *ngIf="openDropdownId === product.id">
                       <button class="dropdown-item" [routerLink]="['/edit-product', product.id]">Editar</button>
                       <button class="dropdown-item" (click)="deleteProduct(product.id)">Eliminar</button>
                     </div>
                   </div>
                 </td>
 
-                }
+              </tr>
+            }
           </tbody>
         </table>
       </div>
-
       <div class="footer">
         <span>{{ listProducts.length }} Resultados</span>
         <select id="quantity" (change)="onQuantityChange($event)">
@@ -62,8 +62,8 @@
       </div>
     </div>
   </div>
-}
+<!--}-->
 
-@if (!showListProducts && showForm) {
+<!--div@if (!showListProducts && showForm) {
   <app-create-product></app-create-product>
-}
+}-->

@@ -4,10 +4,19 @@
   left: 0;
   width: 100%;
   text-align: center;
-  background-color: #fff; // Fondo para evitar transparencia
+  background-color: #fff;
   padding: 1rem 0;
-  z-index: 1000; // Asegura que el header esté por encima de otros elementos
+  z-index: 1000;
   flex: 0 0 20%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  .icon-cash {
+    margin-right: 1.5rem;
+    height: 50px;
+  }
+
   h1 {
     font-size: 1.75rem;
     font-weight: 700;

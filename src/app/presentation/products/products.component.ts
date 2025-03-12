@@ -22,6 +22,7 @@ export class ProductsComponent implements OnInit {
   allProducts: FinancialProduct[] = [];
   selectedQuantity: number = 5;
   showForm = false;
+  openDropdownId: string | null = null;
 
   constructor(
     public financialProductService: FinancialProductApiService,
@@ -77,4 +78,10 @@ export class ProductsComponent implements OnInit {
       this.updateDisplayedProducts();
     });
   }
+
+  toggleDropdown(productId: string): void {
+    // Si el dropdown ya está abierto para ese producto, se cierra; si no, se abre.
+    this.openDropdownId = this.openDropdownId === productId ? null : productId;
+  }
+
 }
