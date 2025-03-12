@@ -1,0 +1,61 @@
+<div class="page-container">
+  <div class="header">
+    <h1>BANCO</h1>
+  </div>
+
+  <div class="actions">
+    <div class="search-box">
+      <input type="text" placeholder="Search..." />
+    </div>
+    <button class="btn-add" (click)="addProduct()">Agregar</button>
+  </div>
+
+  <div class="card-container">
+    <div class="table-responsive">
+      <table>
+        <thead>
+        <tr>
+          <th>Logo</th>
+          <th>Nombre del producto</th>
+          <th>Descripción</th>
+          <th>Fecha de liberación</th>
+          <th>Fecha de reestructuración</th>
+          <th class="text-right"></th>
+        </tr>
+        </thead>
+        <tbody>
+        <!-- Iteración sobre la lista de productos -->
+        @for (product of listProducts; track $index){
+        <tr>
+          <td>
+            <img
+              [src]="product.logo"
+              alt="Logo"
+              class="logo-img"
+            />
+          </td>
+          <td>{{ product.name }}</td>
+          <td>{{ product.description }}</td>
+          <td>{{ product.date_release | date:'yyyy-MM-dd' }}</td>
+          <td>{{ product.date_revision | date:'yyyy-MM-dd' }}</td>
+          <td class="text-right">
+            <button class="menu-button">&hellip;</button>
+          </td>
+          }
+        </tbody>
+      </table>
+    </div>
+
+    <div class="footer">
+      <span>{{ listProducts.length }} Resultados</span>
+      <select>
+        <option value="5">5</option>
+        <option value="10">10</option>
+        <option value="20">20</option>
+      </select>
+    </div>
+  </div>
+</div>
+
+
+

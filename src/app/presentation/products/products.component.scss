@@ -1,0 +1,168 @@
+// Puedes ajustar los colores y valores a tu preferencia
+$page-background: #f5f5f5;
+$card-background: #ffffff;
+$primary-color: #333333;
+$accent-color: #f1c40f;
+
+.page-container {
+  min-height: 100vh;
+  background-color: $page-background;
+  padding: 2rem;
+
+  // Encabezado
+  .header {
+    text-align: center;
+    margin-bottom: 1.5rem;
+
+    h1 {
+      font-size: 1.75rem;
+      font-weight: 700;
+      color: $primary-color;
+    }
+  }
+
+  // Acciones: barra de búsqueda y botón "Agregar"
+  .actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+
+    .search-box {
+      flex: 1;
+      margin-right: 1rem;
+
+      input[type="text"] {
+        width: 30%;
+        padding: 0.5rem 1rem;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        font-size: 1rem;
+
+        &:focus {
+          outline: none;
+          border-color: $accent-color;
+          box-shadow: 0 0 0 2px rgba(241, 196, 15, 0.2);
+        }
+      }
+    }
+
+    .btn-add {
+      background-color: $accent-color;
+      color: #0f265c;
+      border: none;
+      border-radius: 4px;
+      padding: 0.6rem 1.2rem;
+      font-weight: 600;
+      cursor: pointer;
+
+      &:hover {
+        background-color: darken($accent-color, 10%);
+      }
+    }
+  }
+
+  .card-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    background-color: $card-background;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+
+    // Tabla
+    .table-responsive {
+      overflow-x: auto;
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        text-align: left;
+
+        thead {
+          background-color: #f9f9f9;
+
+          th {
+            padding: 0.75rem 1rem;
+            font-weight: 600;
+            color: $primary-color;
+            border-bottom: 2px solid #e0e0e0;
+
+            &.text-right {
+              text-align: right;
+            }
+          }
+        }
+
+        tbody {
+          tr {
+            border-bottom: 1px solid #e0e0e0;
+
+            &:hover {
+              background-color: #fafafa;
+            }
+
+            td {
+              padding: 0.75rem 1rem;
+              vertical-align: middle;
+
+              &.text-right {
+                text-align: right;
+              }
+
+              // Logo
+              .logo-img {
+                height: 40px;
+                width: 40px;
+                border-radius: 50%;
+                object-fit: cover;
+              }
+
+              // Botón de menú (tres puntos)
+              .menu-button {
+                display: inline-block;
+                white-space: nowrap;
+                background: none;
+                border: none;
+                cursor: pointer;
+                font-size: 1.2rem;
+                padding: 0.25rem 0.5rem;
+                border-radius: 4px;
+                transform: rotate(90deg);
+                &:hover {
+                  background-color: #f0f0f0;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+
+    // Footer de la tabla
+    .footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 1rem;
+
+      span {
+        font-size: 0.9rem;
+        color: $primary-color;
+      }
+
+      select {
+        padding: 0.5rem;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        font-size: 1rem;
+
+        &:focus {
+          outline: none;
+          border-color: $accent-color;
+          box-shadow: 0 0 0 2px rgba(241, 196, 15, 0.2);
+        }
+      }
+    }
+  }
+}
