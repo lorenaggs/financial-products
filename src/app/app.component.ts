@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import {ProductsComponent} from './presentation/products/products.component';
+import {ProductsComponent} from './presentation/components/products.component';
 
 @Component({
   selector: 'app-root',
@@ -10,5 +10,5 @@ import {ProductsComponent} from './presentation/products/products.component';
   styleUrl: './app.component.scss'
 })
 export class AppComponent {
-  title = 'financial-products';
+  title = 'financial-components';
 }

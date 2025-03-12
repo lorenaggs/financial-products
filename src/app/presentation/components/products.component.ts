@@ -9,7 +9,7 @@ import {FinancialProduct} from '../../domain/models/financial-product.model';
 import {ModalComponent} from './modal/modal.component';
 
 @Component({
-  selector: 'app-products',
+  selector: 'app-components',
   standalone: true,
   imports: [CommonModule, RouterLink, RouterOutlet, CreateProductComponent, HeaderComponent, FormsModule, NgOptimizedImage, ModalComponent],
   templateUrl: './products.component.html',
