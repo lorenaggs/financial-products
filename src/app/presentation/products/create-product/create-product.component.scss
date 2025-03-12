@@ -27,7 +27,7 @@ $disabled-bg: #e5e7eb;
   padding: 2rem;
   border-radius: 0.5rem;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  width: 100%;
+  width: auto;
   max-width: 40rem;
 
   // Título
@@ -83,33 +83,33 @@ $disabled-bg: #e5e7eb;
   }
 
   // Botones de acción
-  .buttons {
-    grid-column: 1 / -1;
-    width: 100%;
-    display: flex;
-    justify-content: space-between; // uno a la izquierda y el otro a la derecha
-    align-items: center;
-    margin-top: 1.5rem;
 
-    button {
-      padding: 0.5rem 1rem;
-      border-radius: 0.25rem;
-      border: none;
-      cursor: pointer;
-      font-weight: 600;
-      transition: background-color 0.3s ease;
-    }
-
-    .reset {
-      background-color: $disabled-bg;
-      color: $primary-color;
-    }
-
-    .submit {
-      background-color: $accent-color;
-      color: $primary-color;
-    }
+  .btn {
+    width: 50%;
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 0.25rem;
+    cursor: pointer;
+    font-weight: 600;
+    transition: background-color 0.3s ease;
   }
+
+  .container-reset {
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  .btn-reset {
+
+    background-color: $disabled-bg;
+    color: $primary-color;
+  }
+
+  .btn-submit {
+    background-color: $accent-color;
+    color: $primary-color;
+  }
+
 
   @media (min-width: 768px) {
     grid-template-columns: 1fr 1fr;

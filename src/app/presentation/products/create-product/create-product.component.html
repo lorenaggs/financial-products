@@ -5,62 +5,68 @@
     <h2>Formulario de Registro</h2>
     <form [formGroup]="productForm" (ngSubmit)="onSubmit()">
 
-      <div [ngClass]="{'error': productForm.get('id')?.invalid && (productForm.get('id')?.touched || productForm.get('id')?.dirty)}">
+      <div
+        [ngClass]="{'error': productForm.get('id')?.invalid && (productForm.get('id')?.touched || productForm.get('id')?.dirty)}">
         <label for="id">ID</label>
-        <input type="text" id="id" formControlName="id" />
-        @if(getFieldError('id')) {
+        <input type="text" id="id" formControlName="id"/>
+        @if (getFieldError('id')) {
           <p>{{ getFieldError('id') }}</p>
         }
       </div>
 
-      <div [ngClass]="{'error': productForm.get('name')?.invalid && (productForm.get('name')?.touched || productForm.get('name')?.dirty)}">
-        <label for="name">Name</label>
-        <input type="text" id="name" formControlName="name" />
+      <div
+        [ngClass]="{'error': productForm.get('name')?.invalid && (productForm.get('name')?.touched || productForm.get('name')?.dirty)}">
+        <label for="name">Nombre</label>
+        <input type="text" id="name" formControlName="name"/>
         @if (getFieldError('name')) {
           <p>{{ getFieldError('name') }}</p>
         }
       </div>
 
-      <div [ngClass]="{'error': productForm.get('description')?.invalid && (productForm.get('description')?.touched || productForm.get('description')?.dirty)}">
-        <label for="description">Description</label>
-        <input type="text" id="description" formControlName="description" />
-        @if(getFieldError('description')) {
+      <div
+        [ngClass]="{'error': productForm.get('description')?.invalid && (productForm.get('description')?.touched || productForm.get('description')?.dirty)}">
+        <label for="description">Descripción</label>
+        <input type="text" id="description" formControlName="description"/>
+        @if (getFieldError('description')) {
           <p>{{ getFieldError('description') }}</p>
         }
       </div>
 
-      <div [ngClass]="{'error': productForm.get('logo')?.invalid && (productForm.get('logo')?.touched || productForm.get('logo')?.dirty)}">
+      <div
+        [ngClass]="{'error': productForm.get('logo')?.invalid && (productForm.get('logo')?.touched || productForm.get('logo')?.dirty)}">
         <label for="logo">Logo</label>
-        <input type="text" id="logo" formControlName="logo" />
+        <input type="text" id="logo" formControlName="logo"/>
         @if (getFieldError('logo')) {
           <p>{{ getFieldError('logo') }}</p>
         }
       </div>
 
-      <div [ngClass]="{'error': productForm.get('date_release')?.invalid && (productForm.get('date_release')?.touched || productForm.get('date_release')?.dirty)}">
-        <label for="release-date">Release Date</label>
-        <input type="date" id="release-date" formControlName="date_release" />
+      <div
+        [ngClass]="{'error': productForm.get('date_release')?.invalid && (productForm.get('date_release')?.touched || productForm.get('date_release')?.dirty)}">
+        <label for="release-date">Fecha Liberación</label>
+        <input type="date" id="release-date" formControlName="date_release"/>
         @if (getFieldError('date_release')) {
           <p>{{ getFieldError('date_release') }}</p>
         }
       </div>
 
-      <div [ngClass]="{'error': productForm.get('date_revision')?.invalid && (productForm.get('date_revision')?.touched || productForm.get('date_revision')?.dirty)}">
-        <label for="revision-date">Revision Date</label>
-        <input type="date" id="revision-date" formControlName="date_revision" [disabled]="true" />
+      <div
+        [ngClass]="{'error': productForm.get('date_revision')?.invalid && (productForm.get('date_revision')?.touched || productForm.get('date_revision')?.dirty)}">
+        <label for="revision-date">Fecha Revisión</label>
+        <input type="date" id="revision-date" formControlName="date_revision" [disabled]="true"/>
         @if (getFieldError('date_revision')) {
           <p>{{ getFieldError('date_revision') }}</p>
         }
       </div>
 
-      <div class="buttons">
-        <button type="button" class="reset" (click)="onReset()">Reiniciar</button>
-        <button type="submit" class="submit">Enviar</button>
+      <div class="container-reset">
+        <button class="btn btn-reset">Reiniciar</button>
+      </div>
+      <div>
+        <button class="btn btn-submit">Enviar</button>
       </div>
     </form>
   </div>
-
-
 
 
 </div>
