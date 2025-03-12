@@ -1,79 +1,114 @@
-
+// Variables globales
 $page-background: #f5f5f5;
 $card-background: #ffffff;
 $primary-color: #333333;
 $accent-color: #f1c40f;
+$error-color: #ef4444;
+$border-color: #d1d5db;
+$disabled-bg: #e5e7eb;
 
-.page-container {
+// Mixin para centrar elementos con flex
+@mixin flex-center($justify: center, $align: center) {
   display: flex;
-  justify-content: center;
+  justify-content: $justify;
+  align-items: $align;
+}
+
+// Contenedor de la página
+.page-container {
+  @include flex-center;
   background-color: $page-background;
   padding: 7rem;
 }
 
+// Tarjeta principal (formulario)
 .container {
-  background-color: #ffffff;
+  background-color: $card-background;
   padding: 2rem;
   border-radius: 0.5rem;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   width: 100%;
   max-width: 40rem;
-}
-h2 {
-  font-size: 1.5rem;
-  font-weight: 700;
-  margin-bottom: 1.5rem;
-  text-align: center;
-}
-form {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 1.5rem;
-}
-@media (min-width: 768px) {
-  form {
-    grid-template-columns: 1fr 1fr;
+
+  // Título
+  h2 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+    text-align: center;
+    color: $primary-color;
   }
-}
-label {
-  font-weight: 500;
-  display: block;
-  margin-bottom: 0.5rem;
-}
-input {
-  width: 100%;
-  padding: 0.5rem;
-  border: 1px solid #d1d5db;
-  border-radius: 0.25rem;
-  margin-top: 0.25rem;
-}
-input:disabled {
-  background-color: #e5e7eb;
-}
-.error input {
-  border-color: #ef4444;
-}
-.error p {
-  color: #ef4444;
-  font-size: 0.875rem;
-  margin-top: 0.25rem;
-}
-.buttons {
-  display: flex;
-  justify-content: space-between;
-  margin-top: 1.5rem;
-}
-.buttons button {
-  padding: 0.5rem 1rem;
-  border-radius: 0.25rem;
-  border: none;
-  cursor: pointer;
-}
-.reset {
-  background-color: #e5e7eb;
-  color: #374151;
-}
-.submit {
-  background-color: #fbbf24;
-  color: #374151;
+
+  // Formulario y sus elementos
+  form {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+
+    @media (min-width: 768px) {
+      grid-template-columns: 1fr 1fr;
+    }
+
+    // Estilos para labels
+    label {
+      font-weight: 500;
+      display: block;
+      margin-bottom: 0.5rem;
+      color: $primary-color;
+    }
+
+    // Estilos para inputs
+    input {
+      width: 100%;
+      padding: 0.5rem;
+      border: 1px solid $border-color;
+      border-radius: 0.25rem;
+      margin-top: 0.25rem;
+
+      &:disabled {
+        background-color: $disabled-bg;
+      }
+    }
+
+    // Estilos para errores
+    .error {
+      color: $error-color;
+      font-size: 0.875rem;
+      margin-top: 0.25rem;
+
+      input {
+        border-color: $error-color;
+      }
+    }
+  }
+
+  // Botones de acción
+  .buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 1.5rem;
+
+    button {
+      padding: 0.5rem 1rem;
+      border-radius: 0.25rem;
+      border: none;
+      cursor: pointer;
+      font-weight: 600;
+      transition: background-color 0.3s ease;
+
+      &:hover {
+        opacity: 0.9;
+      }
+    }
+
+    .reset {
+      background-color: $disabled-bg;
+      color: $primary-color;
+    }
+
+    .submit {
+      background-color: $accent-color;
+      color: $primary-color;
+    }
+  }
 }

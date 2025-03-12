@@ -1,115 +1,65 @@
 <app-header></app-header>
 <div class="page-container">
+
   <div class="container">
-    <h2>Formulario de Registro</h2>
+    <h2>Registration Form</h2>
     <form [formGroup]="productForm" (ngSubmit)="onSubmit()">
-      <div [ngClass]="{ 'error': isFieldInvalid('id') }">
+      <div [ngClass]="{'error': productForm.get('id')?.invalid && (productForm.get('id')?.touched || productForm.get('id')?.dirty)}">
         <label for="id">ID</label>
-        <input type="text" id="id" formControlName="id"/>
-        @if (productForm.controls['id'].touched && productForm.controls['id'].invalid) {
-          <p>
-            @if (productForm.controls['id'].errors?.['required']) {
-              <span>¡Este campo es requerido!</span>
-            }
-            @if (productForm.controls['id'].errors?.['minlength']) {
-              <span>¡Mínimo 3 caracteres!</span>
-            }
-            @if (productForm.controls['id'].errors?.['maxlength']) {
-              <span>¡Máximo 10 caracteres!</span>
-            }
-            @if (productForm.controls['id'].errors?.['idExists']) {
-              <span>¡ID no válido!</span>
-            }
-          </p>
+        <input type="text" id="id" formControlName="id" />
+        @if(getFieldError('id')) {
+          <p>{{ getFieldError('id') }}</p>
         }
       </div>
 
-      <div [ngClass]="{ 'error': isFieldInvalid('name') }">
-        <label for="nombre">Nombre</label>
-        <input type="text" id="nombre" formControlName="name"/>
-        @if (productForm.controls['name'].touched && productForm.controls['name'].invalid) {
-          <p>
-            @if (productForm.controls['name'].errors?.['required']) {
-              <span>¡Este campo es requerido!</span>
-            }
-            @if (productForm.controls['name'].errors?.['minlength']) {
-              <span>¡Mínimo 5 caracteres!</span>
-            }
-            @if (productForm.controls['name'].errors?.['maxlength']) {
-              <span>¡Máximo 100 caracteres!</span>
-            }
-          </p>
+      <div [ngClass]="{'error': productForm.get('name')?.invalid && (productForm.get('name')?.touched || productForm.get('name')?.dirty)}">
+        <label for="name">Name</label>
+        <input type="text" id="name" formControlName="name" />
+        @if (getFieldError('name')) {
+          <p>{{ getFieldError('name') }}</p>
         }
       </div>
 
-      <div [ngClass]="{ 'error': isFieldInvalid('description') }">
-        <label for="description">Descripción</label>
-        <input type="text" id="description" formControlName="description"/>
-        @if (productForm.controls['description'].touched && productForm.controls['description'].invalid) {
-          <p>
-            @if (productForm.controls['description'].errors?.['required']) {
-              <span>¡Este campo es requerido!</span>
-            }
-            @if (productForm.controls['description'].errors?.['minlength']) {
-              <span>¡Mínimo 10 caracteres!</span>
-            }
-            @if (productForm.controls['description'].errors?.['maxlength']) {
-              <span>¡Máximo 200 caracteres!</span>
-            }
-          </p>
+      <div [ngClass]="{'error': productForm.get('description')?.invalid && (productForm.get('description')?.touched || productForm.get('description')?.dirty)}">
+        <label for="description">Description</label>
+        <input type="text" id="description" formControlName="description" />
+        @if(getFieldError('description')) {
+          <p>{{ getFieldError('description') }}</p>
         }
       </div>
 
-      <!-- Logo -->
-      <div [ngClass]="{ 'error': isFieldInvalid('logo') }">
+      <div [ngClass]="{'error': productForm.get('logo')?.invalid && (productForm.get('logo')?.touched || productForm.get('logo')?.dirty)}">
         <label for="logo">Logo</label>
-        <input type="text" id="logo" formControlName="logo"/>
-        @if (productForm.controls['logo'].touched && productForm.controls['logo'].invalid) {
-          <p>
-            @if (productForm.controls['logo'].errors?.['required']) {
-              <span>¡Este campo es requerido!</span>
-            }
-          </p>
+        <input type="text" id="logo" formControlName="logo" />
+        @if (getFieldError('logo')) {
+          <p>{{ getFieldError('logo') }}</p>
         }
       </div>
 
-      <!-- Fecha Liberación -->
-      <div [ngClass]="{ 'error': isFieldInvalid('date_release') }">
-        <label for="release-date">Fecha Liberación</label>
-        <input type="date" id="release-date" formControlName="date_release"/>
-        @if (productForm.controls['date_release'].touched && productForm.controls['date_release'].invalid) {
-          <p>
-            @if (productForm.controls['date_release'].errors?.['required']) {
-              <span>¡Este campo es requerido!</span>
-            }
-            @if (productForm.controls['date_release'].errors?.['invalidRelease']) {
-              <span>La fecha debe ser igual o mayor a la fecha actual</span>
-            }
-          </p>
+      <div [ngClass]="{'error': productForm.get('date_release')?.invalid && (productForm.get('date_release')?.touched || productForm.get('date_release')?.dirty)}">
+        <label for="release-date">Release Date</label>
+        <input type="date" id="release-date" formControlName="date_release" />
+        @if (getFieldError('date_release')) {
+          <p>{{ getFieldError('date_release') }}</p>
         }
       </div>
 
-      <!-- Fecha Revisión -->
-      <div [ngClass]="{ 'error': isFieldInvalid('date_revision') }">
-        <label for="revision-date">Fecha Revisión</label>
-        <input type="date" id="revision-date" formControlName="date_revision"/>
-        @if (productForm.controls['date_revision'].touched && productForm.controls['date_revision'].invalid) {
-          <p>
-            @if (productForm.controls['date_revision'].errors?.['required']) {
-              <span>¡Este campo es requerido!</span>
-            }
-            @if (productForm.controls['date_revision'].errors?.['invalidRevision']) {
-              <span>Debe ser exactamente 1 año posterior a la liberación</span>
-            }
-          </p>
+      <div [ngClass]="{'error': productForm.get('date_revision')?.invalid && (productForm.get('date_revision')?.touched || productForm.get('date_revision')?.dirty)}">
+        <label for="revision-date">Revision Date</label>
+        <input type="date" id="revision-date" formControlName="date_revision" [disabled]="true" />
+        @if (getFieldError('date_revision')) {
+          <p>{{ getFieldError('date_revision') }}</p>
         }
-
       </div>
 
       <div class="buttons">
-        <button type="reset" class="reset" (click)="onReset()">Reiniciar</button>
-        <button type="submit" class="submit" [disabled]="productForm.invalid">Enviar</button>
+        <button type="button" class="reset" (click)="onReset()">Reiniciar</button>
+        <button type="submit" class="submit">Enviar</button>
       </div>
     </form>
   </div>
+
+
+
+
 </div>
