@@ -1,62 +1,57 @@
 @if (showListProducts) {
   <app-header></app-header>
-  <div class="wrapper">
-
-    <div class="page-container">
-      <div class="actions">
-        <div class="search-box">
-          <input
-            type="text"
-            placeholder="Search..."
-            [(ngModel)]="searchTerm"
-            (input)="searchProducts()"
-          />
-        </div>
-        <button class="btn-add" [routerLink]="['/new-product']" (click)="addProduct()">Agregar</button>
+  <div class="page-container">
+    <div class="actions">
+      <div class="search-box">
+        <input
+          type="text"
+          placeholder="Search..."
+          [(ngModel)]="searchTerm"
+          (input)="searchProducts()"
+        />
       </div>
-      <div class="card-container">
-        <div class="table-responsive">
-          <table>
-            <thead>
-            <tr>
-              <th>Logo</th>
-              <th>Nombre del producto</th>
-              <th>Descripción</th>
-              <th>Fecha de liberación</th>
-              <th>Fecha de reestructuración</th>
-              <th class="text-right"></th>
-            </tr>
-            </thead>
-            <tbody>
-              @for (product of listProducts; track $index) {
-                <tr>
-                  <td>
-                    <img
-                      [src]="product.logo"
-                      alt="Logo"
-                      class="logo-img"
-                    />
-                  </td>
-                  <td>{{ product.name }}</td>
-                  <td>{{ product.description }}</td>
-                  <td>{{ product.date_release | date:'yyyy-MM-dd' }}</td>
-                  <td>{{ product.date_revision | date:'yyyy-MM-dd' }}</td>
-                  <td class="text-right">
-                    <button class="menu-button">&hellip;</button>
-                  </td>
-                  }
-            </tbody>
-          </table>
-        </div>
+      <button class="btn-add" [routerLink]="['/new-product']" (click)="addProduct()">Agregar</button>
+    </div>
+    <div class="card-container">
+      <div class="table-responsive">
+        <table>
+          <thead>
+          <tr>
+            <th>Logo</th>
+            <th>Nombre del producto</th>
+            <th>Descripción</th>
+            <th>Fecha de liberación</th>
+            <th>Fecha de reestructuración</th>
+            <th class="text-right"></th>
+          </tr>
+          </thead>
+          <tbody>
+            @for (product of listProducts; track $index) {
+              <tr>
+                <td>
+                  <div class="profile-icon">
+                    <span>JG</span>
+                  </div>
+                </td>
+                <td>{{ product.name }}</td>
+                <td>{{ product.description }}</td>
+                <td>{{ product.date_release | date:'dd/MM/yyyy' }}</td>
+                <td>{{ product.date_revision | date:'dd/MM/yyyy' }}</td>
+                <td class="text-right">
+                  <button class="menu-button">&hellip;</button>
+                </td>
+                }
+          </tbody>
+        </table>
+      </div>
 
-        <div class="footer">
-          <span>{{ listProducts.length }} Resultados</span>
-          <select id="quantity" (change)="onQuantityChange($event)">
-            <option value="5">5</option>
-            <option value="10">10</option>
-            <option value="20">20</option>
-          </select>
-        </div>
+      <div class="footer">
+        <span>{{ listProducts.length }} Resultados</span>
+        <select id="quantity" (change)="onQuantityChange($event)">
+          <option value="5">5</option>
+          <option value="10">10</option>
+          <option value="20">20</option>
+        </select>
       </div>
     </div>
   </div>

@@ -4,22 +4,12 @@ $card-background: #ffffff;
 $primary-color: #333333;
 $accent-color: #f1c40f;
 
-/*.wrapper {
-  display: flex;
-  flex-direction: column;
-  height: 100vh; // Ocupa la altura total de la pantalla
-}*/
-
 .page-container {
   margin-top: 3rem;
   min-height: 80%;
-  // height: calc(100vh - 3rem); // Resta el alto del header
   background-color: $page-background;
   padding: 7rem;
- /* position: absolute;
-  overflow: hidden;*/
 
-  // Acciones: barra de búsqueda y botón "Agregar"
   .actions {
     display: flex;
     justify-content: space-between;
@@ -68,7 +58,6 @@ $accent-color: #f1c40f;
     border-radius: 8px;
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
 
-    // Tabla
     .table-responsive {
       overflow-x: auto;
 
@@ -108,15 +97,21 @@ $accent-color: #f1c40f;
                 text-align: right;
               }
 
-              // Logo
-              .logo-img {
-                height: 40px;
-                width: 40px;
+              .profile-icon {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                width: 3rem;
+                height: 3rem;
+                background-color: #cbd5e0;
                 border-radius: 50%;
-                object-fit: cover;
+              }
+              .profile-icon span {
+                color: white;
+                font-size: 1.125rem;
+                font-weight: 500;
               }
 
-              // Botón de menú (tres puntos)
               .menu-button {
                 display: inline-block;
                 white-space: nowrap;
@@ -137,7 +132,6 @@ $accent-color: #f1c40f;
       }
     }
 
-    // Footer de la tabla
     .footer {
       display: flex;
       justify-content: space-between;

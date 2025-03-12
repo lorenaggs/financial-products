@@ -56,7 +56,6 @@ export class ProductsComponent implements OnInit {
   }
 
   updateDisplayedProducts(): void {
-    // Se toma la cantidad solicitada de la lista total
     this.listProducts = this.allProducts.slice(0, this.selectedQuantity);
   }
 
