@@ -41,7 +41,9 @@
         <label for="release-date">Fecha Liberación</label>
         <input [ngClass]="{'error-border': productForm.get('date_release')?.invalid &&
         (productForm.get('date_release')?.touched || productForm.get('date_release')?.dirty)}"
-               type="date" id="release-date" formControlName="date_release"/>
+               type="date" id="release-date" formControlName="date_release"
+               [min]="minDate"
+        />
         <p class="error">{{ getFieldError('date_release') }}</p>
       </div>
 

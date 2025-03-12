@@ -29,12 +29,19 @@ export class CreateProductComponent implements OnInit {
   isEditMode = signal(false);
   productId = signal<string | null>(null);
   idParam: string | null = null;
+  minDate = '';
 
   constructor(
     private route: ActivatedRoute = inject(ActivatedRoute),
     private fb: FormBuilder,
     private productService: FinancialProductApiService
   ) {
+    const today = new Date();
+    const dd = String(today.getDate()).padStart(2, '0');
+    const mm = String(today.getMonth() + 1).padStart(2, '0'); // Los meses comienzan en 0
+    const yyyy = today.getFullYear();
+    this.minDate = `${yyyy}-${mm}-${dd}`;
+
 
     this.idParam = this.route.snapshot.paramMap.get('id');
     if (this.idParam) {
@@ -85,6 +92,7 @@ export class CreateProductComponent implements OnInit {
     });
 
   }
+
 
   getFieldError(fieldName: string): string {
     const control = this.productForm.get(fieldName);
@@ -176,7 +184,6 @@ export class CreateProductComponent implements OnInit {
       this.productForm.markAllAsTouched();
     }
   }
-
 
   onReset(): void {
     if (this.isEditMode()) {
