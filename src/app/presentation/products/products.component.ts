@@ -70,8 +70,11 @@ export class ProductsComponent implements OnInit {
     this.updateDisplayedProducts();
   }
 
-  goToEdit(): void {
-    this.showForm = true;
+  deleteProduct(productId: string): void {
+    this.financialProductService.deleteFinancialProduct(productId).subscribe(() => {
+      this.listProducts = this.listProducts.filter((product) => product.id !== productId);
+      this.allProducts = this.allProducts.filter((product) => product.id !== productId);
+      this.updateDisplayedProducts();
+    });
   }
-
 }

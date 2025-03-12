@@ -41,10 +41,12 @@
                   <div class="menu-container">
                     <button class="menu-button">⋮</button>
                     <div class="menu-dropdown">
-                      <button  [routerLink]="['/edit-product', product.id]" (click)="goToEdit()">Editar</button>
+                      <button class="dropdown-item" [routerLink]="['/edit-product', product.id]">Editar</button>
+                      <button class="dropdown-item" (click)="deleteProduct(product.id)">Eliminar</button>
                     </div>
                   </div>
                 </td>
+
                 }
           </tbody>
         </table>

@@ -160,8 +160,16 @@ export class CreateProductComponent implements OnInit {
 
 
   onReset(): void {
-    this.productForm.reset();
+    if (this.isEditMode()) {
+      this.productForm.reset({
+        id: this.productId(),
+      });
+      this.productForm.get('id')?.disable();
+    } else {
+      this.productForm.reset();
+    }
   }
+
 
   loadProduct(): void {
     if (!this.productId()) return;
