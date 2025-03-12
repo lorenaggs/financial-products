@@ -5,7 +5,6 @@
   padding: 1rem;
   height: 100px;
 
-
   .back-icon {
     position: absolute;
     left: 3rem;
@@ -13,9 +12,15 @@
     height: 1rem;
     border-top: 3px solid #0F265C;
     border-left: 3px solid #0F265C;
-    transform: rotate(-45deg); // esta rotación forma la flecha hacia atrás
+    transform: rotate(-45deg);
     cursor: pointer;
     background: transparent;
+
+    @media (max-width: 768px) {
+      width: 0.8rem;
+      height: 0.8rem;
+      border-width: 2px;
+    }
   }
 
   .title-group {
@@ -27,12 +32,29 @@
     .icon-cash {
       display: flex;
       align-items: center;
+
+      svg {
+        width: 60px;
+        height: auto;
+
+        @media (max-width: 768px) {
+          width: 40px;
+        }
+      }
     }
 
     h1 {
       font-size: 1.75rem;
       color: #0f265c;
       margin: 0;
+
+      @media (max-width: 768px) {
+        font-size: 1.25rem;
+      }
+
+      @media (max-width: 480px) {
+        font-size: 1rem;
+      }
     }
   }
 }
