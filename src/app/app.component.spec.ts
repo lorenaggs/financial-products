@@ -28,10 +28,5 @@ describe('AppComponent', () => {
     expect(routerOutlet).not.toBeNull();
   });
 
-  xit('should contain the ProductsComponent', () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    fixture.detectChanges();
-    const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('h1')?.textContent).toContain('Hello, financial-components');
-  });
+
 });

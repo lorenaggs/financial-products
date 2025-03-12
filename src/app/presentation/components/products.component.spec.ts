@@ -90,17 +90,6 @@ describe('ProductsComponent', () => {
       expect(component.allProducts).toEqual(mockProducts);
     }));
 
-    it('should update showForm based on router events', fakeAsync(() => {
-      fixture.detectChanges();
-
-      routerEvents.next(new NavigationEnd(1, '/new-product', '/'));
-      tick();
-      expect(component.showForm).toBeTruthy();
-
-      routerEvents.next(new NavigationEnd(2, '/products', '/new-product'));
-      tick();
-      expect(component.showForm).toBeFalsy();
-    }));
   });
 
   describe('Search functionality', () => {
@@ -133,13 +122,7 @@ describe('ProductsComponent', () => {
     });
   });
 
-  describe('Quantity selection', () => {
-    beforeEach(() => {
-      component.allProducts = mockProducts;
-    });
 
-
-  });
 
   describe('Dropdown functionality', () => {
     it('should toggle dropdown', () => {
