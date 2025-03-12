@@ -1,26 +1,14 @@
-// Puedes ajustar los colores y valores a tu preferencia
 $page-background: #f5f5f5;
 $card-background: #ffffff;
 $primary-color: #333333;
 $accent-color: #f1c40f;
 
-.header {
-  text-align: center;
-  margin-bottom: 1.5rem;
-
-  h1 {
-    font-size: 1.75rem;
-    font-weight: 700;
-    color: #0f265c;
-  }
-}
-
 .page-container {
-  min-height: 100vh;
+  margin-top: 3rem;
+  min-height: 80%;
   background-color: $page-background;
-  padding: 2rem;
+  padding: 7rem;
 
-  // Acciones: barra de búsqueda y botón "Agregar"
   .actions {
     display: flex;
     justify-content: space-between;
@@ -69,7 +57,6 @@ $accent-color: #f1c40f;
     border-radius: 8px;
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
 
-    // Tabla
     .table-responsive {
       overflow-x: auto;
 
@@ -109,16 +96,23 @@ $accent-color: #f1c40f;
                 text-align: right;
               }
 
-              // Logo
-              .logo-img {
-                height: 40px;
-                width: 40px;
+              .profile-icon {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                width: 3rem;
+                height: 3rem;
+                background-color: #cbd5e0;
                 border-radius: 50%;
-                object-fit: cover;
               }
 
-              // Botón de menú (tres puntos)
-              .menu-button {
+              .profile-icon span {
+                color: white;
+                font-size: 1.125rem;
+                font-weight: 500;
+              }
+
+              /*.menu-button {
                 display: inline-block;
                 white-space: nowrap;
                 background: none;
@@ -128,17 +122,17 @@ $accent-color: #f1c40f;
                 padding: 0.25rem 0.5rem;
                 border-radius: 4px;
                 transform: rotate(90deg);
+
                 &:hover {
                   background-color: #f0f0f0;
                 }
-              }
+              }*/
             }
           }
         }
       }
     }
 
-    // Footer de la tabla
     .footer {
       display: flex;
       justify-content: space-between;
@@ -164,4 +158,61 @@ $accent-color: #f1c40f;
       }
     }
   }
+}
+
+
+.menu-container {
+  position: relative;
+  display: inline-block;
+}
+
+/*.menu-button {
+  display: inline-block;
+  white-space: nowrap;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1.2rem;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  transform: rotate(90deg);
+  color: red;
+}*/
+.menu-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1.5rem;
+  transform: rotate(90deg); // Rota el carácter para que se muestre verticalmente
+}
+
+.menu-dropdown {
+  position: absolute;
+  right: 0;
+  top: 100%;
+  background-color: $card-background;
+  border: 1px solid #e0e0e0;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  display: none;
+  z-index: 10;
+  min-width: 120px; // ancho mínimo del dropdown
+  .dropdown-item {
+    display: block;
+    width: 100%;
+    padding: 0.5rem 1rem;
+    background: none;
+    border: none;
+    text-align: left;
+    cursor: pointer;
+    font-size: 0.9rem;
+
+    &:hover {
+      background-color: lighten($accent-color, 40%);
+    }
+  }
+}
+
+.menu-container:hover .menu-dropdown,
+.menu-container:focus-within .menu-dropdown {
+  display: block;
 }

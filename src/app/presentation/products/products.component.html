@@ -1,11 +1,14 @@
-@if (showListProducts) {
-  <div class="header">
-    <h1>BANCO</h1>
-  </div>
+@if (showListProducts && !showForm) {
+  <app-header></app-header>
   <div class="page-container">
     <div class="actions">
       <div class="search-box">
-        <input type="text" placeholder="Search..."/>
+        <input
+          type="text"
+          placeholder="Search..."
+          [(ngModel)]="searchTerm"
+          (input)="searchProducts()"
+        />
       </div>
       <button class="btn-add" [routerLink]="['/new-product']" (click)="addProduct()">Agregar</button>
     </div>
@@ -23,23 +26,27 @@
           </tr>
           </thead>
           <tbody>
-          <!-- Iteración sobre la lista de productos -->
             @for (product of listProducts; track $index) {
               <tr>
                 <td>
-                  <img
-                    [src]="product.logo"
-                    alt="Logo"
-                    class="logo-img"
-                  />
+                  <div class="profile-icon">
+                    <span>JG</span>
+                  </div>
                 </td>
                 <td>{{ product.name }}</td>
                 <td>{{ product.description }}</td>
-                <td>{{ product.date_release | date:'yyyy-MM-dd' }}</td>
-                <td>{{ product.date_revision | date:'yyyy-MM-dd' }}</td>
+                <td>{{ product.date_release | date:'dd/MM/yyyy' }}</td>
+                <td>{{ product.date_revision | date:'dd/MM/yyyy' }}</td>
                 <td class="text-right">
-                  <button class="menu-button">&hellip;</button>
+                  <div class="menu-container">
+                    <button class="menu-button">⋮</button>
+                    <div class="menu-dropdown">
+                      <button class="dropdown-item" [routerLink]="['/edit-product', product.id]">Editar</button>
+                      <button class="dropdown-item" (click)="deleteProduct(product.id)">Eliminar</button>
+                    </div>
+                  </div>
                 </td>
+
                 }
           </tbody>
         </table>
@@ -47,7 +54,7 @@
 
       <div class="footer">
         <span>{{ listProducts.length }} Resultados</span>
-        <select>
+        <select id="quantity" (change)="onQuantityChange($event)">
           <option value="5">5</option>
           <option value="10">10</option>
           <option value="20">20</option>
@@ -57,6 +64,6 @@
   </div>
 }
 
-@if (!showListProducts) {
+@if (!showListProducts && showForm) {
   <app-create-product></app-create-product>
 }
