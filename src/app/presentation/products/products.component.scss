@@ -7,16 +7,6 @@ $error-color: #ef4444;
 $border-color: #d1d5db;
 $disabled-bg: #e5e7eb;
 
-// Reset y box-sizing global
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
-
-/* Contenedor de la página */
 .page-container {
   margin-top: 3rem;
   min-height: 80%;
@@ -24,7 +14,6 @@ $disabled-bg: #e5e7eb;
   padding: 7rem;
 }
 
-/* Sección de acciones */
 .actions {
   display: flex;
   justify-content: space-between;
@@ -65,7 +54,6 @@ $disabled-bg: #e5e7eb;
   }
 }
 
-/* Tarjeta principal (listado) */
 .card-container {
   max-width: 1200px;
   margin: 0 auto;
@@ -160,7 +148,6 @@ $disabled-bg: #e5e7eb;
   }
 }
 
-/* Dropdown del menú */
 .menu-container {
   position: relative;
   display: inline-block;

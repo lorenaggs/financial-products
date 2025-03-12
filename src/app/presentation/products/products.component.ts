@@ -17,7 +17,6 @@ import {FinancialProduct} from '../../domain/models/financial-product.model';
 export class ProductsComponent implements OnInit {
 
   listProducts: FinancialProduct[] = [];
-  showListProducts = true;
   searchTerm: string = '';
   allProducts: FinancialProduct[] = [];
   selectedQuantity: number = 5;
@@ -42,10 +41,6 @@ export class ProductsComponent implements OnInit {
         this.updateDisplayedProducts();
       }
     );
-  }
-
-  addProduct(): void {
-    this.showListProducts = false;
   }
 
   searchProducts(): void {
@@ -80,7 +75,6 @@ export class ProductsComponent implements OnInit {
   }
 
   toggleDropdown(productId: string): void {
-    // Si el dropdown ya está abierto para ese producto, se cierra; si no, se abre.
     this.openDropdownId = this.openDropdownId === productId ? null : productId;
   }
 

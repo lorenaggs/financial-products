@@ -55,7 +55,7 @@ export class CreateProductComponent implements OnInit {
       description: ['', [Validators.required, Validators.minLength(10), Validators.maxLength(200)]],
       logo: ['', Validators.required],
       date_release: ['', Validators.required],
-      date_revision: ['', Validators.required]
+      date_revision: [{ value: '', disabled: true }, Validators.required],
     }, {
       validators: [this.validateDates.bind(this)]
     });
@@ -64,6 +64,25 @@ export class CreateProductComponent implements OnInit {
       const id = this.route.snapshot.paramMap.get('id');
       this.productForm.patchValue({id});
     }
+
+    this.productForm.get('date_release')?.valueChanges.subscribe((value: string) => {
+      if (value) {
+        const releaseDate = new Date(value);
+        const today = new Date();
+        if (releaseDate < new Date(today.getFullYear(), today.getMonth(), today.getDate())) {
+          this.productForm.get('date_release')?.setErrors({ invalidRelease: true });
+          this.productForm.get('date_revision')?.setValue('');
+        } else {
+          const revisionDate = new Date(releaseDate);
+          revisionDate.setFullYear(revisionDate.getFullYear() + 1);
+          const revisionDateStr = revisionDate.toISOString().split('T')[0];
+          this.productForm.get('date_revision')?.setValue(revisionDateStr);
+          this.productForm.get('date_release')?.setErrors(null);
+        }
+      } else {
+        this.productForm.get('date_revision')?.setValue('');
+      }
+    });
 
   }
 
@@ -169,7 +188,6 @@ export class CreateProductComponent implements OnInit {
       this.productForm.reset();
     }
   }
-
 
   loadProduct(): void {
     if (!this.productId()) return;
