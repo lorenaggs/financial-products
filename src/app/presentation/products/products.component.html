@@ -1,4 +1,4 @@
-@if (showListProducts) {
+@if (showListProducts && !showForm) {
   <app-header></app-header>
   <div class="page-container">
     <div class="actions">
@@ -38,7 +38,12 @@
                 <td>{{ product.date_release | date:'dd/MM/yyyy' }}</td>
                 <td>{{ product.date_revision | date:'dd/MM/yyyy' }}</td>
                 <td class="text-right">
-                  <button class="menu-button">&hellip;</button>
+                  <div class="menu-container">
+                    <button class="menu-button">⋮</button>
+                    <div class="menu-dropdown">
+                      <button  [routerLink]="['/edit-product', product.id]" (click)="goToEdit()">Editar</button>
+                    </div>
+                  </div>
                 </td>
                 }
           </tbody>
@@ -57,6 +62,6 @@
   </div>
 }
 
-@if (!showListProducts) {
+@if (!showListProducts && showForm) {
   <app-create-product></app-create-product>
 }

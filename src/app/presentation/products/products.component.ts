@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {FinancialProductApiService} from '../../infrastructure/adapters/financialProductApiService';
 import {CommonModule} from '@angular/common';
-import {RouterLink, RouterOutlet} from '@angular/router';
+import {Router, RouterLink, RouterOutlet} from '@angular/router';
 import {CreateProductComponent} from './create-product/create-product.component';
 import {HeaderComponent} from './header/header.component';
 import {FormsModule} from '@angular/forms';
@@ -21,10 +21,16 @@ export class ProductsComponent implements OnInit {
   searchTerm: string = '';
   allProducts: FinancialProduct[] = [];
   selectedQuantity: number = 5;
+  showForm = false;
 
   constructor(
     public financialProductService: FinancialProductApiService,
+    private router: Router,
   ) {
+    this.router.events.subscribe(() => {
+      const currentRoute = this.router.url;
+      this.showForm = currentRoute.includes('new-product') || currentRoute.includes('edit-product');
+    });
   }
 
   ngOnInit(): void {
@@ -62,6 +68,10 @@ export class ProductsComponent implements OnInit {
   onQuantityChange(event: Event): void {
     this.selectedQuantity = parseInt((event.target as HTMLSelectElement).value, 10);
     this.updateDisplayedProducts();
+  }
+
+  goToEdit(): void {
+    this.showForm = true;
   }
 
 }
