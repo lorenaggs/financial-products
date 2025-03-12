@@ -9,7 +9,7 @@ export function idNotExistsValidator(productService: FinancialProductApiService)
     if (!value || value.trim().length < 3) {
       return of(null);
     }
-    return timer(300).pipe(
+    return timer(0).pipe(
       switchMap(() => productService.verificationId(value)),
       map((exists: boolean) => exists ? { idExists: true } : null),
       catchError((err) => {

@@ -52,7 +52,7 @@ liberación.">
             <tr>
               <td>
                 @if (product.logo.includes('http')) {
-                  <img class="profile-icon" ngSrc="{{product.logo}}" alt="logo" fill/>
+                  <img class="profile-icon" ngSrc="{{product.logo}}" alt="logo" height="50" width="50"/>
                 } @else {
                   <div class="profile-icon">
                     <span>
@@ -94,7 +94,6 @@ liberación.">
 
 @if (showDeleteModal) {
   <app-modal
-    [title]="'Eliminar producto'"
     [message]=" message "
     (onClose)="closeModal()"
     (onConfirm)="confirmDelete()"
