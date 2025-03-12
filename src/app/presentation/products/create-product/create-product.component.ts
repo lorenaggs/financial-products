@@ -99,22 +99,22 @@ export class CreateProductComponent implements OnInit {
 
     if (control && control.invalid && (control.touched || control.dirty)) {
       if (control.errors?.['required']) {
-        return 'Este campo es obligatorio';
+        return 'Este campo es requerido!';
       }
       if (control.errors?.['minlength']) {
-        return `Mínimo ${control.errors['minlength'].requiredLength} caracteres`;
+        return `Mínimo ${control.errors['minlength'].requiredLength} caracteres!`;
       }
       if (control.errors?.['maxlength']) {
         return `Máximo ${control.errors['maxlength'].requiredLength} caracteres`;
       }
       if (control.errors?.['idExists']) {
-        return 'El ID ya existe';
+        return 'ID no válido!';
       }
       if (control.errors?.['invalidRelease']) {
-        return 'La fecha de liberación debe ser hoy o posterior';
+        return 'La fecha de liberación debe ser hoy o posterior!';
       }
       if (control.errors?.['invalidRevision']) {
-        return 'La fecha de revisión debe ser exactamente 1 año posterior a la liberación';
+        return 'La fecha de revisión debe ser exactamente 1 año posterior a la liberación!';
       }
     }
     return '';

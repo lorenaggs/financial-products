@@ -56,7 +56,7 @@ liberación.">
                 } @else {
                   <div class="profile-icon">
                     <span>
-                      {{product.name.slice(0, 2) | uppercase}}
+                      {{ product.name.slice(0, 2) | uppercase }}
                     </span>
                   </div>
                 }
@@ -71,7 +71,7 @@ liberación.">
                   <button class="menu-button" (click)="toggleDropdown(product.id)">...</button>
                   <div class="menu-dropdown" *ngIf="openDropdownId === product.id">
                     <button class="dropdown-item" [routerLink]="['/edit-product', product.id]">Editar</button>
-                    <button class="dropdown-item" (click)="deleteProduct(product.id)">Eliminar</button>
+                    <button class="dropdown-item" (click)="openModal(product.id, product.name)">Eliminar</button>
                   </div>
                 </div>
               </td>
@@ -91,3 +91,13 @@ liberación.">
     </div>
   </div>
 </div>
+
+@if (showDeleteModal) {
+  <app-modal
+    [title]="'Eliminar producto'"
+    [message]=" message "
+    (onClose)="closeModal()"
+    (onConfirm)="confirmDelete()"
+  ></app-modal>
+}
+
