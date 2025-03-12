@@ -24,7 +24,9 @@ $disabled-bg: #e5e7eb;
   @include flex-center;
   background-color: $page-background;
   padding: 7rem;
-  height: 100vh;
+  height: calc(100vh - 100px);
+  overflow: scroll;
+
 }
 
 .container {
@@ -33,7 +35,6 @@ $disabled-bg: #e5e7eb;
   border-radius: 0.5rem;
   width: 100%;
   max-width: 40rem;
-  margin: 0 auto;
 
   .line-divider{
     border-top: 2px solid black;

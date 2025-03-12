@@ -5,10 +5,9 @@ $accent-color: #f1c40f;
 $border-color: #d1d5db;
 
 .page-container {
-  margin-top: 5rem;
   background-color: $page-background;
   padding: 5rem;
-  min-height: 80vh;
+  height: calc(100vh - 100px);
 }
 
 .actions {
