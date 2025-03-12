@@ -35,13 +35,11 @@ export class FinancialProductApiService {
     return this.httpService.delete<any>(`${this.apiUrl}/bp/products/${productId}`);
   }
 
-  checkIfIdExists(id: string): Observable<boolean> {
-    return this.httpService.get<{ exists: boolean }>(`${this.apiUrl}/bp/products/exists/${id}`)
-      .pipe(
-        map(response => response.exists),
-        catchError(() => of(false))
-      );
+  verificationId(id: string): Observable<boolean> {
+    return this.httpService.get<boolean>(`${this.apiUrl}/bp/products/verification/${id}`).pipe(
+      map(response => response),
+      catchError(() => of(false))
+    );
   }
-
 
 }

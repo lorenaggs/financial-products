@@ -43,7 +43,7 @@ $disabled-bg: #e5e7eb;
   form {
     display: grid;
     grid-template-columns: 1fr;
-    gap: 1.5rem;
+    gap: 2rem;
 
     @media (min-width: 768px) {
       grid-template-columns: 1fr 1fr;
@@ -84,8 +84,11 @@ $disabled-bg: #e5e7eb;
 
   // Botones de acción
   .buttons {
+    grid-column: 1 / -1;
+    width: 100%;
     display: flex;
-    justify-content: space-between;
+    justify-content: space-between; // uno a la izquierda y el otro a la derecha
+    align-items: center;
     margin-top: 1.5rem;
 
     button {
@@ -95,10 +98,6 @@ $disabled-bg: #e5e7eb;
       cursor: pointer;
       font-weight: 600;
       transition: background-color 0.3s ease;
-
-      &:hover {
-        opacity: 0.9;
-      }
     }
 
     .reset {
@@ -111,4 +110,14 @@ $disabled-bg: #e5e7eb;
       color: $primary-color;
     }
   }
+
+  @media (min-width: 768px) {
+    grid-template-columns: 1fr 1fr;
+
+    // Aseguramos que los botones sigan ocupando el ancho completo
+    .buttons {
+      grid-column: 1 / -1;
+    }
+  }
+
 }

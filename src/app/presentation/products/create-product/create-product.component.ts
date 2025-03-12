@@ -9,6 +9,7 @@ import {
 import { FinancialProductApiService } from '../../../infrastructure/adapters/financialProductApiService';
 import { NgClass } from '@angular/common';
 import { HeaderComponent } from '../header/header.component';
+import {idNotExistsValidator} from '../../../shared/utils/idNotExistsValidator-utils';
 
 @Component({
   selector: 'app-create-product',
@@ -31,7 +32,11 @@ export class CreateProductComponent implements OnInit {
 
   ngOnInit(): void {
     this.productForm = this.fb.group({
-      id: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(10)]],
+      id: ['', {
+        validators: [Validators.required, Validators.minLength(3), Validators.maxLength(10)],
+        asyncValidators: [idNotExistsValidator(this.productService)],
+        updateOn: 'change'
+      }],
       name: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(100)]],
       description: ['', [Validators.required, Validators.minLength(10), Validators.maxLength(200)]],
       logo: ['', Validators.required],
@@ -44,6 +49,7 @@ export class CreateProductComponent implements OnInit {
 
   getFieldError(fieldName: string): string {
     const control = this.productForm.get(fieldName);
+
     if (control && control.invalid && (control.touched || control.dirty)) {
       if (control.errors?.['required']) {
         return 'Este campo es obligatorio';
@@ -53,6 +59,9 @@ export class CreateProductComponent implements OnInit {
       }
       if (control.errors?.['maxlength']) {
         return `Máximo ${control.errors['maxlength'].requiredLength} caracteres`;
+      }
+      if (control.errors?.['idExists']) {
+        return 'El ID ya existe';
       }
       if (control.errors?.['invalidRelease']) {
         return 'La fecha de liberación debe ser hoy o posterior';
