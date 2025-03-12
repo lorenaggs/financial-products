@@ -3,11 +3,12 @@ import {FinancialProductApiService} from '../../infrastructure/adapters/financia
 import {CommonModule} from '@angular/common';
 import {RouterLink, RouterOutlet} from '@angular/router';
 import {CreateProductComponent} from './create-product/create-product.component';
+import {HeaderComponent} from './header/header.component';
 
 @Component({
   selector: 'app-products',
   standalone: true,
-  imports: [CommonModule, RouterLink, RouterOutlet, CreateProductComponent],
+  imports: [CommonModule, RouterLink, RouterOutlet, CreateProductComponent, HeaderComponent],
   templateUrl: './products.component.html',
   styleUrl: './products.component.scss'
 })
@@ -32,15 +33,5 @@ export class ProductsComponent implements OnInit {
 
   addProduct(): void {
     this.showListProducts = false;
-    /*this.financialProductService.createFinancialProduct({
-      id: '1',
-      name: 'Producto 1',
-      description: 'Descripcion del producto 1',
-      price: 1000
-    }).subscribe(
-      (response) => {
-        console.log(response);
-      }
-    );*/
   }
 }

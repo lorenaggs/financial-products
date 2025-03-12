@@ -4,21 +4,20 @@ $card-background: #ffffff;
 $primary-color: #333333;
 $accent-color: #f1c40f;
 
-.header {
-  text-align: center;
-  margin-bottom: 1.5rem;
-
-  h1 {
-    font-size: 1.75rem;
-    font-weight: 700;
-    color: #0f265c;
-  }
-}
+/*.wrapper {
+  display: flex;
+  flex-direction: column;
+  height: 100vh; // Ocupa la altura total de la pantalla
+}*/
 
 .page-container {
-  min-height: 100vh;
+  margin-top: 3rem;
+  min-height: 80%;
+  // height: calc(100vh - 3rem); // Resta el alto del header
   background-color: $page-background;
-  padding: 2rem;
+  padding: 7rem;
+ /* position: absolute;
+  overflow: hidden;*/
 
   // Acciones: barra de búsqueda y botón "Agregar"
   .actions {

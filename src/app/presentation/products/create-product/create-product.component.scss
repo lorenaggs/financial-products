@@ -4,21 +4,11 @@ $card-background: #ffffff;
 $primary-color: #333333;
 $accent-color: #f1c40f;
 
-.header {
-  text-align: center;
-  margin-bottom: 1.5rem;
-
-  h1 {
-    font-size: 1.75rem;
-    font-weight: 700;
-    color: #0f265c;
-  }
-}
-
 .page-container {
-  min-height: 100vh;
+  display: flex;
+  justify-content: center;
   background-color: $page-background;
-  padding: 2rem;
+  padding: 7rem;
 }
 
 .container {
@@ -87,109 +77,3 @@ input:disabled {
   background-color: #fbbf24;
   color: #374151;
 }
-
-
-
-
-
-
-
-
-/*.container {
-  max-width: 600px;
-  margin: 2rem auto;
-  background: #fff;
-  border-radius: 8px;
-  padding: 2rem;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-
-  h2 {
-    text-align: center;
-    margin-bottom: 1.5rem;
-  }
-
-  form {
-    display: flex;
-    flex-direction: column;
-
-    !* Espacio entre cada bloque de input *!
-    & > div {
-      margin-bottom: 1rem;
-    }
-
-    label {
-      display: block;
-      margin-bottom: 0.3rem;
-      font-weight: 600;
-    }
-
-    input[type="text"],
-    input[type="date"] {
-      width: 100%;
-      padding: 0.5rem;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-
-      &:focus {
-        outline: none;
-        border-color: #f1c40f;
-        box-shadow: 0 0 0 2px rgba(241, 196, 15, 0.2);
-      }
-    }
-
-    !* Mensajes de error *!
-    p {
-      margin-top: 0.3rem;
-      font-size: 0.9rem;
-      color: #e74c3c;
-    }
-
-    !* Clase .error para resaltar el contenedor de un campo con errores *!
-    .error {
-      label,
-      input,
-      textarea {
-        color: #e74c3c;
-        border-color: #e74c3c !important;
-      }
-    }
-
-    .buttons {
-      display: flex;
-      justify-content: center;
-      gap: 1rem;
-      margin-top: 1rem;
-
-      button {
-        border: none;
-        padding: 0.6rem 1.2rem;
-        border-radius: 4px;
-        cursor: pointer;
-        font-weight: 600;
-      }
-
-      .reset {
-        background-color: #7f8c8d; !* gris *!
-        color: #fff;
-
-        &:hover {
-          background-color: darken(#7f8c8d, 10%);
-        }
-      }
-
-      .submit {
-        background-color: #f1c40f; !* amarillo *!
-        color: #fff;
-
-        &:hover {
-          background-color: darken(#f1c40f, 10%);
-        }
-
-        &:disabled {
-          opacity: 0.5;
-          cursor: not-allowed;
-        }
-      }
-    }
-  }
-}*/
