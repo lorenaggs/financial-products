@@ -90,6 +90,20 @@
         &.text-right {
           text-align: right;
         }
+
+        .table-header {
+          display: flex;
+          align-items: center;
+          white-space: nowrap;
+
+          .info-icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            margin-left: 0.5rem;
+          }
+        }
+
       }
 
       tbody tr {
@@ -180,7 +194,7 @@
       font-size: 0.9rem;
 
       &:hover {
-        background-color: lighten($accent-color, 40%);
+        background-color: $gray-light;
       }
     }
   }

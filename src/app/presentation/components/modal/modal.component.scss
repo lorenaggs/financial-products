@@ -68,14 +68,14 @@
       }
 
       .confirm {
-        background-color: $yellow-color;
+        background-color: rgba($accent-color, 0.4);
         color: $blue-color;
         padding: 1rem 1.5rem;
         width: 45%;
         font-weight: bold;
 
         &:hover {
-          background-color: $yellow-hover;
+          background-color: $accent-color;
         }
       }
     }
