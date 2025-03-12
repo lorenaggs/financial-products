@@ -1,19 +1,21 @@
+@import "../../../../assets/styles/variables";
+
 .modal-overlay {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(75, 85, 99, 0.8); // Fondo oscuro translúcido
+  background-color: $modal-background;
   display: flex;
   justify-content: center;
   align-items: center;
   z-index: 9999;
 
   .modal {
-    background-color: #FFFFFF;
+    background-color: $card-background;
     border-radius: 0.5rem;
-    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 10px 15px $box-shadow;
     padding: 1.5rem;
     max-width: 28rem;
     width: 100%;
@@ -32,7 +34,7 @@
       margin-top: 5rem;
 
       .line-divider {
-        border-top: 1px solid #d1d5db;
+        border-top: 1px solid $border-color;
         margin: 1rem 0;
       }
 
@@ -54,26 +56,26 @@
       }
 
       .cancel {
-        background-color: #F3F4F6;
-        color: #1E3A8A;
+        background-color: $gray-cancel;
+        color: $blue-color;
         padding: 1rem 1.5rem;
         width: 45%;
-        font-weight: bold;
+        font-weight: 600;
 
         &:hover {
-          background-color: #E5E7EB;
+          background-color: $disabled-bg;
         }
       }
 
       .confirm {
-        background-color: #FEF3C7;
-        color: #1E3A8A;
+        background-color: $yellow-color;
+        color: $blue-color;
         padding: 1rem 1.5rem;
         width: 45%;
         font-weight: bold;
 
         &:hover {
-          background-color: #FDE68A;
+          background-color: $yellow-hover;
         }
       }
     }
