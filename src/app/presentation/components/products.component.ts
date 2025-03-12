@@ -32,6 +32,7 @@ export class ProductsComponent implements OnInit {
     public financialProductService: FinancialProductApiService,
     private router: Router,
   ) {
+    console.log('ProductsComponent constructor');
     this.router.events.subscribe(() => {
       const currentRoute = this.router.url;
       this.showForm = currentRoute.includes('new-product') || currentRoute.includes('edit-product');
