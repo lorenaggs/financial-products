@@ -34,9 +34,7 @@
         <input [ngClass]="{'error-border': productForm.get('logo')?.invalid &&
         (productForm.get('logo')?.touched || productForm.get('logo')?.dirty)}"
                type="text" id="logo" formControlName="logo"/>
-        @if (getFieldError('logo')) {
-          <p class="error">{{ getFieldError('logo') }}</p>
-        }
+        <p class="error">{{ getFieldError('logo') }}</p>
       </div>
 
       <div>
@@ -44,9 +42,7 @@
         <input [ngClass]="{'error-border': productForm.get('date_release')?.invalid &&
         (productForm.get('date_release')?.touched || productForm.get('date_release')?.dirty)}"
                type="date" id="release-date" formControlName="date_release"/>
-        @if (getFieldError('date_release')) {
-          <p class="error">{{ getFieldError('date_release') }}</p>
-        }
+        <p class="error">{{ getFieldError('date_release') }}</p>
       </div>
 
       <div>
@@ -54,19 +50,16 @@
         <input [ngClass]="{'error-border': productForm.get('date_revision')?.invalid
         && (productForm.get('date_revision')?.touched || productForm.get('date_revision')?.dirty)}"
                type="date" id="revision-date" formControlName="date_revision" [disabled]="true"/>
-        @if (getFieldError('date_revision')) {
-          <p class="error">{{ getFieldError('date_revision') }}</p>
-        }
+        <p class="error">{{ getFieldError('date_revision') }}</p>
       </div>
 
       <div class="container-reset">
-        <button class="btn btn-reset">Reiniciar</button>
+        <button class="btn btn-reset" (click)="onReset()">Reiniciar</button>
       </div>
       <div>
-        <button class="btn btn-submit">Enviar</button>
+        <button class="btn btn-submit" [disabled]="productForm.invalid">Enviar</button>
       </div>
     </form>
   </div>
-
 
 </div>

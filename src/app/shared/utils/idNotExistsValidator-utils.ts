@@ -10,12 +10,9 @@ export function idNotExistsValidator(productService: FinancialProductApiService)
     }
     return timer(300).pipe(
       switchMap(() => {
-        // Log para ver el valor que se está validando
-        console.log('Verificando ID:', control.value);
         return productService.verificationId(control.value);
       }),
       map((exists: boolean) => {
-        console.log('Respuesta del servicio para el ID', control.value, ':', exists);
         return exists ? { idExists: true } : null;
       }),
       catchError((err) => {

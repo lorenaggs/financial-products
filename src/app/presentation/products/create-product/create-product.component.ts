@@ -23,6 +23,7 @@ import {idNotExistsValidator} from '../../../shared/utils/idNotExistsValidator-u
   styleUrls: ['./create-product.component.scss']
 })
 export class CreateProductComponent implements OnInit {
+
   public productForm!: FormGroup;
 
   constructor(
@@ -83,10 +84,11 @@ export class CreateProductComponent implements OnInit {
 
     const releaseDate = new Date(releaseDateControl.value);
     const revisionDate = new Date(revisionDateControl.value);
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
 
-    if (releaseDate < today) {
+    const today = new Date();
+    const todayLocal = new Date(today.getFullYear(), today.getMonth(), today.getDate() - 1);
+
+    if (releaseDate < todayLocal) {
       releaseDateControl.setErrors({ invalidRelease: true });
     } else if (releaseDateControl.hasError('invalidRelease')) {
       releaseDateControl.setErrors(null);
@@ -94,6 +96,7 @@ export class CreateProductComponent implements OnInit {
 
     const oneYearAfter = new Date(releaseDate);
     oneYearAfter.setFullYear(oneYearAfter.getFullYear() + 1);
+
     if (revisionDate.getTime() !== oneYearAfter.getTime()) {
       revisionDateControl.setErrors({ invalidRevision: true });
     } else if (revisionDateControl.hasError('invalidRevision')) {
@@ -102,6 +105,7 @@ export class CreateProductComponent implements OnInit {
 
     return null;
   }
+
 
   onSubmit(): void {
     if (this.productForm.valid) {
