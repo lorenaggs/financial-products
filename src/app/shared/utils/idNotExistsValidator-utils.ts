@@ -5,16 +5,13 @@ import {catchError} from 'rxjs/operators';
 
 export function idNotExistsValidator(productService: FinancialProductApiService): AsyncValidatorFn {
   return (control: AbstractControl): Observable<{ idExists: boolean } | null> => {
-    if (!control.value || control.value.length < 3) {
+    const value: string = control.value;
+    if (!value || value.trim().length < 3) {
       return of(null);
     }
     return timer(300).pipe(
-      switchMap(() => {
-        return productService.verificationId(control.value);
-      }),
-      map((exists: boolean) => {
-        return exists ? { idExists: true } : null;
-      }),
+      switchMap(() => productService.verificationId(value)),
+      map((exists: boolean) => exists ? { idExists: true } : null),
       catchError((err) => {
         console.error('Error en la verificación del ID:', err);
         return of(null);
