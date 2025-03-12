@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {FinancialProductApiService} from '../../infrastructure/adapters/financialProductApiService';
-import {CommonModule} from '@angular/common';
+import {CommonModule, NgOptimizedImage} from '@angular/common';
 import {Router, RouterLink, RouterOutlet} from '@angular/router';
 import {CreateProductComponent} from './create-product/create-product.component';
 import {HeaderComponent} from './header/header.component';
@@ -10,7 +10,7 @@ import {FinancialProduct} from '../../domain/models/financial-product.model';
 @Component({
   selector: 'app-products',
   standalone: true,
-  imports: [CommonModule, RouterLink, RouterOutlet, CreateProductComponent, HeaderComponent, FormsModule],
+  imports: [CommonModule, RouterLink, RouterOutlet, CreateProductComponent, HeaderComponent, FormsModule, NgOptimizedImage],
   templateUrl: './products.component.html',
   styleUrl: './products.component.scss'
 })

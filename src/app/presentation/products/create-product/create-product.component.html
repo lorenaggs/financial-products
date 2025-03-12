@@ -2,7 +2,8 @@
 <div class="page-container">
 
   <div class="container">
-    <h2>Formulario de Registro</h2>
+    <h2>{{ isEditMode() ? 'Editar Producto' : 'Formulario de Registro' }}</h2>
+    <div class="line-divider"></div>
     <form [formGroup]="productForm" (ngSubmit)="onSubmit()">
 
       <div>
@@ -15,8 +16,8 @@
 
       <div>
         <label for="name">Nombre</label>
-        <input [ngClass]="{'error-border': productForm.get('id')?.invalid &&
-        (productForm.get('id')?.touched || productForm.get('id')?.dirty)}"
+        <input [ngClass]="{'error-border': productForm.get('name')?.invalid &&
+        (productForm.get('name')?.touched || productForm.get('name')?.dirty)}"
                type="text" id="name" formControlName="name"/>
         <p class="error">{{ getFieldError('name') }}</p>
       </div>
@@ -51,7 +52,7 @@
         <label for="revision-date">Fecha Revisión</label>
         <input readonly [ngClass]="{'error-border': productForm.get('date_revision')?.invalid
         && (productForm.get('date_revision')?.touched || productForm.get('date_revision')?.dirty)}"
-               type="date" id="revision-date" formControlName="date_revision" />
+               type="date" id="revision-date" formControlName="date_revision"/>
         <p class="error">{{ getFieldError('date_revision') }}</p>
       </div>
 

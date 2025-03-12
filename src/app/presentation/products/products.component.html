@@ -1,8 +1,9 @@
 <app-header></app-header>
 <div class="page-container">
-  <div class="actions">
+  <div class="actions ">
     <div class="search-box">
       <input
+
         type="text"
         placeholder="Search..."
         [(ngModel)]="searchTerm"
@@ -50,10 +51,17 @@ liberación.">
           @for (product of listProducts; track $index) {
             <tr>
               <td>
-                <div class="profile-icon">
-                  <span>{{ 'JG' }}</span>
-                </div>
+                @if (product.logo.includes('http')) {
+                  <img class="profile-icon" ngSrc="{{product.logo}}" alt="logo" fill/>
+                } @else {
+                  <div class="profile-icon">
+                    <span>
+                      {{product.name.slice(0, 2) | uppercase}}
+                    </span>
+                  </div>
+                }
               </td>
+
               <td>{{ product.name }}</td>
               <td>{{ product.description }}</td>
               <td>{{ product.date_release | date:'dd/MM/yyyy' }}</td>
