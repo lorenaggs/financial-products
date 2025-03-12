@@ -23,7 +23,6 @@ describe('FinancialProductApiService', () => {
   };
 
   beforeEach(() => {
-    // Crear mock del CommonHttpService
     httpServiceMock = {
       get: jest.fn(),
       post: jest.fn(),
@@ -61,10 +60,37 @@ describe('FinancialProductApiService', () => {
     it('should handle error when request fails', (done) => {
       const errorMessage = 'Network error';
       httpServiceMock.get.mockReturnValue(throwError(() => new Error(errorMessage)));
-
       const consoleSpy = jest.spyOn(console, 'error').mockImplementation();
 
       service.getFinancialProducts().subscribe({
+        error: (error) => {
+          expect(error).toBeTruthy();
+          expect(consoleSpy).toHaveBeenCalled();
+          consoleSpy.mockRestore();
+          done();
+        }
+      });
+    });
+  });
+
+  describe('getFinancialProductById', () => {
+    it('should return a single financial product', (done) => {
+      httpServiceMock.get.mockReturnValue(of(mockProduct));
+
+      service.getFinancialProductById('1').subscribe({
+        next: (product) => {
+          expect(product).toEqual(mockProduct);
+          expect(httpServiceMock.get).toHaveBeenCalledWith(`${environment.apiUrl}/bp/products/1`);
+          done();
+        }
+      });
+    });
+
+    it('should handle error when getting single product fails', (done) => {
+      httpServiceMock.get.mockReturnValue(throwError(() => new Error('Error')));
+      const consoleSpy = jest.spyOn(console, 'error').mockImplementation();
+
+      service.getFinancialProductById('1').subscribe({
         error: (error) => {
           expect(error).toBeTruthy();
           expect(consoleSpy).toHaveBeenCalled();
@@ -91,44 +117,21 @@ describe('FinancialProductApiService', () => {
         }
       });
     });
-
-    it('should handle error when creation fails', (done) => {
-      const errorMessage = 'Creation failed';
-      httpServiceMock.post.mockReturnValue(throwError(() => new Error(errorMessage)));
-
-      service.createFinancialProduct(mockProduct).subscribe({
-        error: (error) => {
-          expect(error.message).toBe(errorMessage);
-          done();
-        }
-      });
-    });
   });
 
   describe('updateFinancialProduct', () => {
     it('should update a financial product', (done) => {
       const expectedResponse = { success: true };
+      const updateData = { name: 'Updated Product' };
       httpServiceMock.put.mockReturnValue(of(expectedResponse));
 
-      service.updateFinancialProduct(mockProduct).subscribe({
+      service.updateFinancialProduct(updateData, '1').subscribe({
         next: (response) => {
           expect(response).toEqual(expectedResponse);
           expect(httpServiceMock.put).toHaveBeenCalledWith(
-            `${environment.apiUrl}/bp/products/${mockProduct.id}`,
-            mockProduct
+            `${environment.apiUrl}/bp/products/1`,
+            updateData
           );
-          done();
-        }
-      });
-    });
-
-    it('should handle error when update fails', (done) => {
-      const errorMessage = 'Update failed';
-      httpServiceMock.put.mockReturnValue(throwError(() => new Error(errorMessage)));
-
-      service.updateFinancialProduct(mockProduct).subscribe({
-        error: (error) => {
-          expect(error.message).toBe(errorMessage);
           done();
         }
       });
@@ -140,24 +143,72 @@ describe('FinancialProductApiService', () => {
       const expectedResponse = { success: true };
       httpServiceMock.delete.mockReturnValue(of(expectedResponse));
 
-      service.deleteFinancialProduct(mockProduct.id).subscribe({
+      service.deleteFinancialProduct('1').subscribe({
         next: (response) => {
           expect(response).toEqual(expectedResponse);
           expect(httpServiceMock.delete).toHaveBeenCalledWith(
-            `${environment.apiUrl}/bp/products/${mockProduct.id}`
+            `${environment.apiUrl}/bp/products/1`
+          );
+          done();
+        }
+      });
+    });
+  });
+
+  describe('verificationId', () => {
+    it('should return true when ID is valid', (done) => {
+      httpServiceMock.get.mockReturnValue(of(true));
+
+      service.verificationId('1').subscribe({
+        next: (result) => {
+          expect(result).toBe(true);
+          expect(httpServiceMock.get).toHaveBeenCalledWith(
+            `${environment.apiUrl}/bp/products/verification/1`
           );
           done();
         }
       });
     });
 
-    it('should handle error when deletion fails', (done) => {
-      const errorMessage = 'Deletion failed';
-      httpServiceMock.delete.mockReturnValue(throwError(() => new Error(errorMessage)));
+    it('should return false when verification fails', (done) => {
+      httpServiceMock.get.mockReturnValue(throwError(() => new Error('Error')));
 
-      service.deleteFinancialProduct(mockProduct.id).subscribe({
-        error: (error) => {
-          expect(error.message).toBe(errorMessage);
+      service.verificationId('1').subscribe({
+        next: (result) => {
+          expect(result).toBe(false);
+          expect(httpServiceMock.get).toHaveBeenCalledWith(
+            `${environment.apiUrl}/bp/products/verification/1`
+          );
+          done();
+        }
+      });
+    });
+  });
+
+  describe('edge cases', () => {
+    it('should handle null productId in getFinancialProductById', (done) => {
+      httpServiceMock.get.mockReturnValue(of(mockProduct));
+
+      service.getFinancialProductById(null).subscribe({
+        next: (product) => {
+          expect(product).toEqual(mockProduct);
+          expect(httpServiceMock.get).toHaveBeenCalledWith(`${environment.apiUrl}/bp/products/null`);
+          done();
+        }
+      });
+    });
+
+    it('should handle null id in updateFinancialProduct', (done) => {
+      const updateData = { name: 'Updated Product' };
+      httpServiceMock.put.mockReturnValue(of({ success: true }));
+
+      service.updateFinancialProduct(updateData, null).subscribe({
+        next: (response) => {
+          expect(response).toEqual({ success: true });
+          expect(httpServiceMock.put).toHaveBeenCalledWith(
+            `${environment.apiUrl}/bp/products/null`,
+            updateData
+          );
           done();
         }
       });

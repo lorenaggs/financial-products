@@ -8,10 +8,11 @@ describe('CommonHttpService', () => {
   let httpClientMock: jest.Mocked<HttpClient>;
 
   // Datos de prueba
-  const mockUrl = 'https://api.test.com/endpoint';
-  const mockData = { id: 1, name: 'Test' };
-  const mockOptions = { headers: { 'Content-Type': 'application/json' } };
-  const mockError = new HttpErrorResponse({
+  const testUrl = 'https://api.test.com/data';
+  const testBody = { name: 'test' };
+  const testOptions = { headers: { 'Content-Type': 'application/json' } };
+  const testResponse = { id: 1, name: 'test response' };
+  const testError = new HttpErrorResponse({
     error: 'test error',
     status: 404,
     statusText: 'Not Found'
@@ -36,43 +37,47 @@ describe('CommonHttpService', () => {
     service = TestBed.inject(CommonHttpService);
   });
 
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
+
   it('should be created', () => {
     expect(service).toBeTruthy();
   });
 
-  describe('GET requests', () => {
-    it('should make a successful GET request', (done) => {
-      httpClientMock.get.mockReturnValue(of(mockData));
+  describe('GET Method', () => {
+    it('should make a successful GET request without options', (done) => {
+      httpClientMock.get.mockReturnValue(of(testResponse));
 
-      service.get(mockUrl).subscribe({
+      service.get(testUrl).subscribe({
         next: (response) => {
-          expect(response).toEqual(mockData);
-          expect(httpClientMock.get).toHaveBeenCalledWith(mockUrl, undefined);
+          expect(response).toEqual(testResponse);
+          expect(httpClientMock.get).toHaveBeenCalledWith(testUrl, undefined);
           done();
         }
       });
     });
 
-    it('should make a GET request with options', (done) => {
-      httpClientMock.get.mockReturnValue(of(mockData));
+    it('should make a successful GET request with options', (done) => {
+      httpClientMock.get.mockReturnValue(of(testResponse));
 
-      service.get(mockUrl, mockOptions).subscribe({
+      service.get(testUrl, testOptions).subscribe({
         next: (response) => {
-          expect(response).toEqual(mockData);
-          expect(httpClientMock.get).toHaveBeenCalledWith(mockUrl, mockOptions);
+          expect(response).toEqual(testResponse);
+          expect(httpClientMock.get).toHaveBeenCalledWith(testUrl, testOptions);
           done();
         }
       });
     });
 
     it('should handle GET request error', (done) => {
-      httpClientMock.get.mockReturnValue(throwError(() => mockError));
+      httpClientMock.get.mockReturnValue(throwError(() => testError));
       const consoleSpy = jest.spyOn(console, 'error').mockImplementation();
 
-      service.get(mockUrl).subscribe({
+      service.get(testUrl).subscribe({
         error: (error) => {
-          expect(error).toBe(mockError);
-          expect(consoleSpy).toHaveBeenCalled();
+          expect(error).toBe(testError);
+          expect(consoleSpy).toHaveBeenCalledWith('Error en la petición HTTP:', testError);
           consoleSpy.mockRestore();
           done();
         }
@@ -80,39 +85,39 @@ describe('CommonHttpService', () => {
     });
   });
 
-  describe('POST requests', () => {
-    it('should make a successful POST request', (done) => {
-      httpClientMock.post.mockReturnValue(of(mockData));
+  describe('POST Method', () => {
+    it('should make a successful POST request without options', (done) => {
+      httpClientMock.post.mockReturnValue(of(testResponse));
 
-      service.post(mockUrl, mockData).subscribe({
+      service.post(testUrl, testBody).subscribe({
         next: (response) => {
-          expect(response).toEqual(mockData);
-          expect(httpClientMock.post).toHaveBeenCalledWith(mockUrl, mockData, undefined);
+          expect(response).toEqual(testResponse);
+          expect(httpClientMock.post).toHaveBeenCalledWith(testUrl, testBody, undefined);
           done();
         }
       });
     });
 
-    it('should make a POST request with options', (done) => {
-      httpClientMock.post.mockReturnValue(of(mockData));
+    it('should make a successful POST request with options', (done) => {
+      httpClientMock.post.mockReturnValue(of(testResponse));
 
-      service.post(mockUrl, mockData, mockOptions).subscribe({
+      service.post(testUrl, testBody, testOptions).subscribe({
         next: (response) => {
-          expect(response).toEqual(mockData);
-          expect(httpClientMock.post).toHaveBeenCalledWith(mockUrl, mockData, mockOptions);
+          expect(response).toEqual(testResponse);
+          expect(httpClientMock.post).toHaveBeenCalledWith(testUrl, testBody, testOptions);
           done();
         }
       });
     });
 
     it('should handle POST request error', (done) => {
-      httpClientMock.post.mockReturnValue(throwError(() => mockError));
+      httpClientMock.post.mockReturnValue(throwError(() => testError));
       const consoleSpy = jest.spyOn(console, 'error').mockImplementation();
 
-      service.post(mockUrl, mockData).subscribe({
+      service.post(testUrl, testBody).subscribe({
         error: (error) => {
-          expect(error).toBe(mockError);
-          expect(consoleSpy).toHaveBeenCalled();
+          expect(error).toBe(testError);
+          expect(consoleSpy).toHaveBeenCalledWith('Error en la petición HTTP:', testError);
           consoleSpy.mockRestore();
           done();
         }
@@ -120,39 +125,39 @@ describe('CommonHttpService', () => {
     });
   });
 
-  describe('PUT requests', () => {
-    it('should make a successful PUT request', (done) => {
-      httpClientMock.put.mockReturnValue(of(mockData));
+  describe('PUT Method', () => {
+    it('should make a successful PUT request without options', (done) => {
+      httpClientMock.put.mockReturnValue(of(testResponse));
 
-      service.put(mockUrl, mockData).subscribe({
+      service.put(testUrl, testBody).subscribe({
         next: (response) => {
-          expect(response).toEqual(mockData);
-          expect(httpClientMock.put).toHaveBeenCalledWith(mockUrl, mockData, undefined);
+          expect(response).toEqual(testResponse);
+          expect(httpClientMock.put).toHaveBeenCalledWith(testUrl, testBody, undefined);
           done();
         }
       });
     });
 
-    it('should make a PUT request with options', (done) => {
-      httpClientMock.put.mockReturnValue(of(mockData));
+    it('should make a successful PUT request with options', (done) => {
+      httpClientMock.put.mockReturnValue(of(testResponse));
 
-      service.put(mockUrl, mockData, mockOptions).subscribe({
+      service.put(testUrl, testBody, testOptions).subscribe({
         next: (response) => {
-          expect(response).toEqual(mockData);
-          expect(httpClientMock.put).toHaveBeenCalledWith(mockUrl, mockData, mockOptions);
+          expect(response).toEqual(testResponse);
+          expect(httpClientMock.put).toHaveBeenCalledWith(testUrl, testBody, testOptions);
           done();
         }
       });
     });
 
     it('should handle PUT request error', (done) => {
-      httpClientMock.put.mockReturnValue(throwError(() => mockError));
+      httpClientMock.put.mockReturnValue(throwError(() => testError));
       const consoleSpy = jest.spyOn(console, 'error').mockImplementation();
 
-      service.put(mockUrl, mockData).subscribe({
+      service.put(testUrl, testBody).subscribe({
         error: (error) => {
-          expect(error).toBe(mockError);
-          expect(consoleSpy).toHaveBeenCalled();
+          expect(error).toBe(testError);
+          expect(consoleSpy).toHaveBeenCalledWith('Error en la petición HTTP:', testError);
           consoleSpy.mockRestore();
           done();
         }
@@ -160,39 +165,39 @@ describe('CommonHttpService', () => {
     });
   });
 
-  describe('DELETE requests', () => {
-    it('should make a successful DELETE request', (done) => {
-      httpClientMock.delete.mockReturnValue(of(mockData));
+  describe('DELETE Method', () => {
+    it('should make a successful DELETE request without options', (done) => {
+      httpClientMock.delete.mockReturnValue(of(testResponse));
 
-      service.delete(mockUrl).subscribe({
+      service.delete(testUrl).subscribe({
         next: (response) => {
-          expect(response).toEqual(mockData);
-          expect(httpClientMock.delete).toHaveBeenCalledWith(mockUrl, undefined);
+          expect(response).toEqual(testResponse);
+          expect(httpClientMock.delete).toHaveBeenCalledWith(testUrl, undefined);
           done();
         }
       });
     });
 
-    it('should make a DELETE request with options', (done) => {
-      httpClientMock.delete.mockReturnValue(of(mockData));
+    it('should make a successful DELETE request with options', (done) => {
+      httpClientMock.delete.mockReturnValue(of(testResponse));
 
-      service.delete(mockUrl, mockOptions).subscribe({
+      service.delete(testUrl, testOptions).subscribe({
         next: (response) => {
-          expect(response).toEqual(mockData);
-          expect(httpClientMock.delete).toHaveBeenCalledWith(mockUrl, mockOptions);
+          expect(response).toEqual(testResponse);
+          expect(httpClientMock.delete).toHaveBeenCalledWith(testUrl, testOptions);
           done();
         }
       });
     });
 
     it('should handle DELETE request error', (done) => {
-      httpClientMock.delete.mockReturnValue(throwError(() => mockError));
+      httpClientMock.delete.mockReturnValue(throwError(() => testError));
       const consoleSpy = jest.spyOn(console, 'error').mockImplementation();
 
-      service.delete(mockUrl).subscribe({
+      service.delete(testUrl).subscribe({
         error: (error) => {
-          expect(error).toBe(mockError);
-          expect(consoleSpy).toHaveBeenCalled();
+          expect(error).toBe(testError);
+          expect(consoleSpy).toHaveBeenCalledWith('Error en la petición HTTP:', testError);
           consoleSpy.mockRestore();
           done();
         }
@@ -200,17 +205,17 @@ describe('CommonHttpService', () => {
     });
   });
 
-  describe('Error handling', () => {
-    it('should log error to console and return error observable', (done) => {
+  describe('Error Handling', () => {
+    it('should properly handle and transform HTTP errors', (done) => {
       const consoleSpy = jest.spyOn(console, 'error').mockImplementation();
 
-      // Acceder al método privado handleError a través de cualquier método público
-      httpClientMock.get.mockReturnValue(throwError(() => mockError));
+      // Forzar un error en cualquier método para probar el manejo de errores
+      httpClientMock.get.mockReturnValue(throwError(() => testError));
 
-      service.get(mockUrl).subscribe({
+      service.get(testUrl).subscribe({
         error: (error) => {
-          expect(error).toBe(mockError);
-          expect(consoleSpy).toHaveBeenCalledWith('Error en la petición HTTP:', mockError);
+          expect(error).toBe(testError);
+          expect(consoleSpy).toHaveBeenCalledWith('Error en la petición HTTP:', testError);
           consoleSpy.mockRestore();
           done();
         }
