@@ -1,6 +1,6 @@
-import { TestBed, ComponentFixture } from '@angular/core/testing';
+import {TestBed, ComponentFixture, tick, fakeAsync} from '@angular/core/testing';
 import { CreateProductComponent } from './create-product.component';
-import {AbstractControl, FormBuilder, ReactiveFormsModule} from '@angular/forms';
+import { FormBuilder, ReactiveFormsModule} from '@angular/forms';
 import { FinancialProductApiService } from '../../../infrastructure/adapters/financialProductApiService';
 import { ActivatedRoute } from '@angular/router';
 import { of } from 'rxjs';
@@ -87,61 +87,116 @@ describe('CreateProductComponent', () => {
     expect(component.productForm.get('description')?.valid).toBeFalsy();
   });
 
-  it('should call product service on create', () => {
-    component.productForm.setValue(
-      {
-      "id": "doss",
-      "name": "dossdossdoss",
-      "description": "dossdossdoss",
-      "logo": "dossdoss",
-      "date_release": "2025-03-13", "date_revision": "2026-03-13"
-      }
-    );
+  it('should call createFinancialProduct on valid submit (async validator)', fakeAsync(() => {
+    const mockProduct = {
+      id: 'doss',
+      name: 'dossdossdoss',
+      description: 'dossdossdoss',
+      logo: 'dossdoss',
+      date_release: '2025-03-13',
+      date_revision: '2026-03-13'
+    };
 
+    jest.spyOn(productServiceMock, 'createFinancialProduct').mockReturnValue(of({ message: 'Producto creado' }));
+    jest.spyOn(productServiceMock, 'verificationId').mockReturnValue(of(false));
 
-    component.productForm.updateValueAndValidity(); // Forzar la actualización de validaciones
+    component.productForm.setValue(mockProduct);
+    component.productForm.updateValueAndValidity();
+    tick(500);
+
+    fixture.detectChanges();
 
     component.onSubmit();
-
+    expect(component.productForm.valid).toBe(true);
     expect(productServiceMock.createFinancialProduct).toHaveBeenCalled();
-  });
+  }));
 
-  it('should call product service on update', () => {
-    activatedRouteMock.snapshot.paramMap.get.mockReturnValue('123');
-    component = new CreateProductComponent(activatedRouteMock, new FormBuilder(), productServiceMock);
-    component.isEditMode.set(true);
-    component.idParam = '123';
+  it('should call createFinancialProduct when not in edit mode', fakeAsync(() => {
+    activatedRouteMock.snapshot.paramMap.get.mockReturnValue(null);
+    component.isEditMode.set(false);
 
+    // Mock validación asíncrona
+    jest.spyOn(productServiceMock, 'verificationId').mockReturnValue(of(false));
+
+    // Mock respuesta del servicio de creación
+    const createSpy = jest.spyOn(productServiceMock, 'createFinancialProduct')
+      .mockReturnValue(of({ message: 'Product added successfully' }));
+
+    // Mock `alert`
+    const alertSpy = jest.spyOn(window, 'alert').mockImplementation(() => {});
+
+    // Asignar valores válidos al formulario
     component.productForm.setValue({
-      id: '123',
-      name: 'NEW Product',
-      description: 'Updated Description',
-      logo: 'updated-logo.png',
-      date_release: '2025-03-10',
-      date_revision: '2026-03-10'
+      id: '456',
+      name: 'New Product',
+      description: 'New Description',
+      logo: 'new-logo.png',
+      date_release: '2025-04-10',
+      date_revision: '2026-04-10'
     });
 
+    // Marcar todos los campos como tocados y forzar validación
+    component.productForm.markAllAsTouched();
+    component.productForm.updateValueAndValidity();
+    tick(500); // Esperar validación asíncrona
 
-    component.productForm.updateValueAndValidity(); // Forzar la actualización de validaciones
-    expect(component.productForm.valid).toBeTruthy(); // Verifica que sea válido
-
-    const submitSpy = jest.spyOn(productServiceMock, 'createFinancialProduct'); // Espía la llamada
+    expect(component.productForm.valid).toBe(true);
 
     component.onSubmit();
 
-    expect(submitSpy).toHaveBeenCalled();
+    expect(createSpy).toHaveBeenCalledWith({
+      id: '456',
+      name: 'New Product',
+      description: 'New Description',
+      logo: 'new-logo.png',
+      date_release: '2025-04-10',
+      date_revision: '2026-04-10'
+    });
+
+    expect(alertSpy).toHaveBeenCalledWith('Product added successfully');
+
+    // Limpieza del mock de `alert`
+    alertSpy.mockRestore();
+  }));
+
+  it('should call updateFinancialProduct when in edit mode', fakeAsync(() => {
+    const mockProduct = {
+      id: 'doss',
+      name: 'dossdossdoss',
+      description: 'dossdossdoss',
+      logo: 'dossdoss',
+      date_release: '2025-03-13',
+      date_revision: '2026-03-13'
+    };
+
+    jest.spyOn(productServiceMock, 'verificationId').mockReturnValue(of(false));
+
+    const alertSpy = jest.spyOn(window, 'alert').mockImplementation(() => {});
+
+    component.isEditMode.set(true);
+    component.idParam = 'doss';
+
+    component.productForm.setValue(mockProduct);
+    component.productForm.markAllAsTouched();
+    component.productForm.updateValueAndValidity();
+    tick(500);
+    expect(component.productForm.valid).toBe(true);
+    component.onSubmit();
     expect(productServiceMock.updateFinancialProduct).toHaveBeenCalled();
-  });
+    alertSpy.mockRestore();
+  }));
+
 
   it('should disable ID field in edit mode', () => {
     activatedRouteMock.snapshot.paramMap.get.mockReturnValue('123');
     component = new CreateProductComponent(activatedRouteMock, new FormBuilder(), productServiceMock);
+    component.ngOnInit();
     component.isEditMode.set(true);
     component.loadProduct();
     fixture.detectChanges();
-
     expect(component.productForm.get('id')?.disabled).toBeTruthy();
   });
+
 
   it('should reset the form on reset', () => {
     component.productForm.patchValue({ id: '123', name: 'Product' });
