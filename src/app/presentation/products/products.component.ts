@@ -1,19 +1,20 @@
 import {Component, OnInit} from '@angular/core';
-import {FinancialProductApiService} from '../../infrastructure/adapters/serviceCommon';
+import {FinancialProductApiService} from '../../infrastructure/adapters/financialProductApiService';
 import {CommonModule} from '@angular/common';
-import {HttpClient} from '@angular/common/http';
+import {RouterLink, RouterOutlet} from '@angular/router';
+import {CreateProductComponent} from './create-product/create-product.component';
 
 @Component({
   selector: 'app-products',
   standalone: true,
-  imports: [CommonModule],
-  providers: [HttpClient],
+  imports: [CommonModule, RouterLink, RouterOutlet, CreateProductComponent],
   templateUrl: './products.component.html',
   styleUrl: './products.component.scss'
 })
 export class ProductsComponent implements OnInit {
 
   listProducts: any[] = [];
+  showListProducts = true;
 
   constructor(
     public financialProductService: FinancialProductApiService,
@@ -30,6 +31,7 @@ export class ProductsComponent implements OnInit {
   }
 
   addProduct(): void {
+    this.showListProducts = false;
     /*this.financialProductService.createFinancialProduct({
       id: '1',
       name: 'Producto 1',

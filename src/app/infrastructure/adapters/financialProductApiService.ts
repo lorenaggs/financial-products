@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {map, Observable, throwError} from 'rxjs';
+import {map, Observable, of, throwError} from 'rxjs';
 import { FinancialProduct } from '../../domain/models/financial-product.model';
 import { CommonHttpService } from './common-http.service';
 import {environment} from '../../../eviroments/enviroment';
@@ -34,4 +34,14 @@ export class FinancialProductApiService {
   deleteFinancialProduct(productId: string): Observable<any> {
     return this.httpService.delete<any>(`${this.apiUrl}/bp/products/${productId}`);
   }
+
+  checkIfIdExists(id: string): Observable<boolean> {
+    return this.httpService.get<{ exists: boolean }>(`${this.apiUrl}/bp/products/exists/${id}`)
+      .pipe(
+        map(response => response.exists),
+        catchError(() => of(false))
+      );
+  }
+
+
 }
