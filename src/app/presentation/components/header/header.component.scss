@@ -1,3 +1,5 @@
+$blue-color: #0F265C;
+
 .header {
   display: flex;
   align-items: center;
@@ -17,8 +19,8 @@
     left: 3rem;
     width: 1rem;
     height: 1rem;
-    border-top: 3px solid #0F265C;
-    border-left: 3px solid #0F265C;
+    border-top: 3px solid $blue-color;
+    border-left: 3px solid $blue-color;
     transform: rotate(-45deg);
     cursor: pointer;
     background: transparent;
@@ -52,7 +54,7 @@
 
     h1 {
       font-size: 1.75rem;
-      color: #0f265c;
+      color: $blue-color;
       margin: 0;
 
       @media (max-width: 768px) {
