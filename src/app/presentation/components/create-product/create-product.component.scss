@@ -20,7 +20,6 @@ $disabled-bg: #e5e7eb;
 
 .page-container {
   background-color: $page-background;
-  // overflow: auto;
   @include flex-center();
   padding: 10rem 5rem 5rem 5rem;
   @media (max-width: 768px) {
