@@ -1,0 +1,132 @@
+<div class="header">
+  <h1>BANCO</h1>
+</div>
+<div class="page-container">
+
+  <div class="container">
+    <h2>Formulario de Registro</h2>
+    <form [formGroup]="productForm" (ngSubmit)="onSubmit()">
+      <div [ngClass]="{ 'error': isFieldInvalid('id') }">
+        <label for="id">ID</label>
+        <input type="text" id="id" formControlName="id"/>
+        @if (productForm.controls['id'].touched && productForm.controls['id'].invalid) {
+          <p>
+            @if (productForm.controls['id'].errors?.['required']){
+              <span>¡Este campo es requerido!</span>
+            }
+            @if (productForm.controls['id'].errors?.['minlength']){
+              <span>¡Mínimo 3 caracteres!</span>
+            }
+            @if (productForm.controls['id'].errors?.['maxlength']){
+              <span>¡Máximo 10 caracteres!</span>
+            }
+            @if (productForm.controls['id'].errors?.['idExists']){
+              <span>¡ID no válido!</span>
+            }
+          </p>
+        }
+      </div>
+
+      <div [ngClass]="{ 'error': isFieldInvalid('name') }">
+        <label for="nombre">Nombre</label>
+        <input type="text" id="nombre" formControlName="name"/>
+        @if (productForm.controls['name'].touched && productForm.controls['name'].invalid) {
+          <p>
+            @if (productForm.controls['name'].errors?.['required']){
+              <span>¡Este campo es requerido!</span>
+            }
+            @if (productForm.controls['name'].errors?.['minlength']){
+              <span>¡Mínimo 5 caracteres!</span>
+            }
+            @if (productForm.controls['name'].errors?.['maxlength']){
+              <span>¡Máximo 100 caracteres!</span>
+            }
+          </p>
+        }
+      </div>
+
+      <div [ngClass]="{ 'error': isFieldInvalid('description') }">
+        <label for="description">Descripción</label>
+        <input type="text" id="description" formControlName="description"/>
+        @if (productForm.controls['description'].touched && productForm.controls['description'].invalid) {
+          <p>
+            @if (productForm.controls['description'].errors?.['required']){
+              <span>¡Este campo es requerido!</span>
+            }
+            @if (productForm.controls['description'].errors?.['minlength']){
+              <span>¡Mínimo 10 caracteres!</span>
+            }
+            @if (productForm.controls['description'].errors?.['maxlength']){
+              <span>¡Máximo 200 caracteres!</span>
+            }
+          </p>
+        }
+      </div>
+
+      <!-- Logo -->
+      <div [ngClass]="{ 'error': isFieldInvalid('logo') }">
+        <label for="logo">Logo</label>
+        <input type="text" id="logo" formControlName="logo"/>
+        @if (productForm.controls['logo'].touched && productForm.controls['logo'].invalid) {
+          <p>
+            @if (productForm.controls['logo'].errors?.['required']){
+              <span>¡Este campo es requerido!</span>
+            }
+          </p>
+        }
+      </div>
+
+      <!-- Fecha Liberación -->
+      <div [ngClass]="{ 'error': isFieldInvalid('releaseDate') }">
+        <label for="release-date">Fecha Liberación</label>
+        <input type="date" id="release-date" formControlName="releaseDate"/>
+        @if (productForm.controls['releaseDate'].touched && productForm.controls['releaseDate'].invalid) {
+          <p>
+            @if (productForm.controls['releaseDate'].errors?.['required']){
+              <span>¡Este campo es requerido!</span>
+            }
+            @if (productForm.controls['releaseDate'].errors?.['invalidRelease']){
+              <span>La fecha debe ser igual o mayor a la fecha actual</span>
+            }
+          </p>
+        }
+      </div>
+
+      <!-- Fecha Revisión -->
+      <div [ngClass]="{ 'error': isFieldInvalid('revisionDate') }">
+        <label for="revision-date">Fecha Revisión</label>
+        <input type="date" id="revision-date" formControlName="revisionDate"/>
+        @if (productForm.controls['revisionDate'].touched && productForm.controls['revisionDate'].invalid) {
+          <p>
+            @if (productForm.controls['revisionDate'].errors?.['required']){
+              <span>¡Este campo es requerido!</span>
+            }
+            @if (productForm.controls['revisionDate'].errors?.['invalidRevision']){
+              <span>Debe ser exactamente 1 año posterior a la liberación</span>
+            }
+          </p>
+        }
+
+      </div>
+
+      <div class="buttons">
+        <button type="reset" class="reset" (click)="onReset()">Reiniciar</button>
+        <button type="submit" class="submit" [disabled]="productForm.invalid">Enviar</button>
+      </div>
+    </form>
+  </div>
+
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
